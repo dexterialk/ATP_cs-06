@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dexteria: brand and style guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap">
+<style>
+:root{--bg:#F0ECE3;--bg2:#E8E3D8;--surface:#FBF9F4;--ink:#1C2A20;--ink2:#4A574C;--sage:#829080;--soft:#DCE2D8;--gold:#C9A55A;--line:rgba(28,42,32,.14);
+--fd:"Manrope","DM Sans",system-ui,sans-serif;--fb:"DM Sans",system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121914;--bg2:#18211B;--surface:#1D2720;--ink:#ECE7DC;--ink2:#C4CCC0;--sage:#9DAE99;--soft:#2A372D;--gold:#D4B26A;--line:rgba(236,231,220,.16);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121914;--bg2:#18211B;--surface:#1D2720;--ink:#ECE7DC;--ink2:#C4CCC0;--sage:#9DAE99;--soft:#2A372D;--gold:#D4B26A;--line:rgba(236,231,220,.16);color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--fb);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:26px;height:72px}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{width:38px;height:38px;border-radius:11px;background:#F0ECE3;display:grid;place-items:center;flex:none}
+.mark img{width:26px}
+.mark.big{width:76px;height:76px;border-radius:21px}.mark.big img{width:52px}
+.word{width:104px;aspect-ratio:1060/159;background:var(--wc,var(--ink));-webkit-mask:var(--w) center/contain no-repeat;mask:var(--w) center/contain no-repeat}
+.word.big{width:200px}
+.links{display:flex;gap:26px;margin-left:auto;font-size:14px;font-weight:500}
+.links a{padding:6px 0;background:linear-gradient(var(--sage),var(--sage)) left bottom/0 1px no-repeat;transition:background-size .3s}
+.links a:hover{background-size:100% 1px}
+.btn{font:600 14px var(--fb);border:1px solid var(--ink);cursor:pointer;border-radius:999px;padding:12px 22px;background:var(--ink);color:var(--bg);transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.ghost{background:none;color:var(--ink);border-color:var(--line);padding:10px 16px}
+.menu,.drawer{display:none}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:48px 0 72px}
+h1{font:600 clamp(42px,6.2vw,78px)/1.05 var(--fd);letter-spacing:-.035em;margin:0}
+h1 span{display:block}h1 span+span{color:var(--sage)}
+.sub{color:var(--ink2);max-width:30em;margin:24px 0 30px}
+.stage{position:relative;aspect-ratio:1;max-height:640px;width:100%;border-radius:32px;background:radial-gradient(circle at 50% 40%,var(--surface),var(--bg2) 75%);border:1px solid var(--line);overflow:hidden}
+.gl{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink2)}
+.gl canvas{width:100%;height:100%;display:block}
+.empty{display:grid;justify-items:center;gap:14px;padding:24px;text-align:center;font-size:15px}.empty p{margin:0}
+.stage::after{content:"";position:absolute;inset:14px;border:1.5px dashed var(--line);border-radius:22px;pointer-events:none}
+.sec{border-top:1px solid var(--line);padding:56px 0}
+.sec h2{font:600 clamp(28px,3.4vw,40px)/1.15 var(--fd);letter-spacing:-.025em;margin:0 0 8px}
+.intro{color:var(--ink2);max-width:42em;margin:0 0 28px}
+.g{display:grid;gap:12px}.g5{grid-template-columns:repeat(5,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g7{grid-template-columns:repeat(7,1fr)}
+.tile{display:grid;place-items:center;gap:12px;min-height:150px;border-radius:18px;border:1px solid var(--line);background:var(--b,var(--surface));padding:18px}
+.tile .brand{flex-direction:column;gap:12px}
+.cap2{font-size:13px;color:var(--ink2);margin:8px 2px 0}
+.sw{font:inherit;text-align:left;cursor:pointer;border:1px solid var(--line);border-radius:18px;padding:0;overflow:hidden;background:var(--surface);color:var(--ink2);font-size:13px;transition:transform .2s}
+.sw:hover{transform:translateY(-3px)}
+.sw span{display:block;height:84px;background:var(--c)}
+.sw b{display:block;padding:10px 12px 0;color:var(--ink);font-size:15px}
+.sw em{display:block;padding:0 12px 10px;font-style:normal;line-height:1.4}
+.card{border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--surface)}
+.card h3{font:600 18px var(--fd);margin:0 0 6px}.card p{margin:0;color:var(--ink2);font-size:15px}
+.row{display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row small{flex:none;width:150px;font-size:13px;color:var(--ink2)}
+.tester{width:100%;font:inherit;padding:14px 20px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin-bottom:6px}
+.demo{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.pill{font-size:14px;font-weight:500;background:var(--soft);color:var(--ink2);padding:7px 14px;border-radius:999px}
+.sp{display:flex;align-items:flex-end;gap:14px;margin-top:22px;font-size:12px;color:var(--ink2)}
+.sp i{display:block;background:var(--sage);border-radius:4px;margin-bottom:6px;width:100%}
+.do{border-left:3px solid var(--sage);padding-left:12px;margin-top:12px;font-size:15px}.dont{border-left-color:var(--gold)}
+:root{--e:cubic-bezier(.2,.8,.2,1)}
+.links a.on{background-size:100% 1px;color:var(--sage)}
+.btn:active{transform:scale(.95,.9)}
+.bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--sage),var(--gold));transform:scaleX(0);transform-origin:left;z-index:40}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--e),transform .9s var(--e)}.rv.in{opacity:1;transform:none}
+.ln{display:block;overflow:hidden;padding-bottom:.12em}.ln i{display:block;font-style:normal;animation:rise 1s var(--e) both;animation-delay:calc(.1s + var(--i)*.15s)}
+.ul{display:block;width:min(420px,85%);margin:0;overflow:visible}.ul path,.dpath{stroke:var(--gold);stroke-width:3.5;fill:none;stroke-linecap:round;stroke-dasharray:1;animation:drawl 1.2s .9s var(--e) both}
+.meta{font-size:14px;color:var(--ink2);margin:22px 0 0;max-width:34em}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.ring{position:absolute;left:50%;top:50%;width:46%;aspect-ratio:1;margin:-23% 0 0 -23%;border:1.5px solid var(--sage);border-radius:50%;animation:pulse 4.5s ease-out infinite;animation-delay:calc(var(--i)*1.5s);opacity:0}
+.chip{position:absolute;z-index:2;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:0 14px 34px rgba(28,42,32,.12);translate:calc(var(--px,0)*var(--k)) calc(var(--py,0)*var(--k));animation:float 6s ease-in-out infinite}
+.chip small{display:block;font-size:12px;color:var(--ink2)}.chip b{font:600 26px/1.1 var(--fd);letter-spacing:-.02em}
+.chip.a{left:7%;top:9%;--k:14px}.chip.b{right:7%;bottom:10%;--k:-16px;animation-delay:-3s}
+.chip svg{display:block;width:96px;height:24px}.chip path{stroke:var(--sage);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-dasharray:6 4;animation:dash 1.6s linear infinite}
+.stat{border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--surface)}
+.stat b{display:block;font:600 clamp(32px,3.6vw,46px)/1.1 var(--fd);letter-spacing:-.03em}
+.stat p{margin:8px 0 10px;font-size:15px;color:var(--ink2)}.stat small{font-size:12px;color:var(--ink2)}
+.pg{display:grid;grid-template-columns:2fr 1fr;gap:12px}.side{display:grid;gap:12px;align-content:start}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tab{font:500 14px var(--fb);border:1px solid var(--line);background:none;color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}.tab[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chart{width:100%;height:auto;display:block;touch-action:pan-y}.chart text{fill:var(--ink2);font:12px var(--fb)}
+.draw{stroke-dasharray:1}.rv.in .draw{animation:drawl 1.5s var(--e) both}
+.rd{font-size:14px;color:var(--ink2);margin:0 0 6px;min-height:24px}
+.bars{display:flex;align-items:flex-end;gap:8px;height:96px;margin-top:10px}.barx{flex:1;background:var(--sage);border-radius:6px 6px 2px 2px;transform-origin:bottom;transform:scaleY(0)}.rv.in .barx{animation:grow .9s var(--e) both;animation-delay:calc(var(--i)*70ms)}
+.gauge{display:grid;place-items:center;position:relative}.gauge b{position:absolute;font:600 28px var(--fd)}.gauge circle{fill:none;stroke-width:10;stroke-linecap:round}
+.fine{font-size:13px;color:var(--ink2);margin:14px 2px 0}
+.g2{grid-template-columns:1fr 1fr}
+.shot{border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--surface);transition:transform .25s var(--e);transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}.shot img{display:block;width:100%;height:auto}
+.demo2{position:relative;min-height:110px;display:grid;place-items:center;overflow:hidden}
+@keyframes rise{from{transform:translateY(110%) rotate(3deg)}to{transform:none}}
+@keyframes drawl{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes pulse{0%{transform:scale(.5);opacity:0}20%{opacity:.7}100%{transform:scale(2.1);opacity:0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes dash{to{stroke-dashoffset:-20}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes gauge{from{stroke-dashoffset:var(--c)}}
+@media (max-width:900px){.pg,.g2{grid-template-columns:1fr}.chip.b{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.barx{transform:none}.ul path,.draw{stroke-dashoffset:0}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;gap:32px}.links{display:none}.menu{display:inline-block;margin-left:auto}.drawer.open{display:flex;flex-direction:column;padding:4px 0 16px;border-top:1px solid var(--line)}.drawer a{padding:12px 4px;font-weight:500}.g5,.g4{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr}.g7{grid-template-columns:repeat(4,1fr)}.row{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script>
+const {useState,useEffect,useRef}=React,h=React.createElement;
+document.documentElement.style.setProperty("--w","url(assets/images/logotext-img.png)");
+const LINKS=[["Impact","#impact"],["Progress","#progress"],["Brand","#logo"],["Colour","#colour"],["Typography","#type"],["Motion","#motion"],["Voice","#voice"]];
+const Mark=({big})=>h("span",{className:"mark"+(big?" big":"")},h("img",{src:"assets/images/logo-img.png",alt:""}));
+const Word=({big})=>h("span",{className:"word"+(big?" big":""),role:"img","aria-label":"Dexteria"});
+const Lockup=()=>h("span",{className:"brand"},h(Mark),h(Word));
+const Sec=(id,title,intro,...kids)=>h("section",{id,className:"wrap sec rv"},h("h2",null,title),h("p",{className:"intro"},intro),...kids);
+
+function Nav(){
+  const [open,setOpen]=useState(false),[dark,setDark]=useState(false);
+  const [act,setAct]=useState("");
+  useEffect(()=>{const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&setAct("#"+e.target.id)),{rootMargin:"-45% 0px -50% 0px"});LINKS.forEach(([,u])=>{const n=document.querySelector(u);n&&io.observe(n)});return()=>io.disconnect()},[]);
+  const flip=()=>{setDark(!dark);document.documentElement.dataset.theme=dark?"light":"dark"};
+  return h("header",null,h("div",{className:"wrap"},
+    h("nav",null,h("a",{href:"#top","aria-label":"Dexteria home"},h(Lockup)),
+      h("div",{className:"links"},LINKS.map(([t,u])=>h("a",{key:u,href:u,className:act===u?"on":""},t))),
+      h("button",{className:"btn ghost",onClick:flip},dark?"Light mode":"Dark mode"),
+      h("button",{className:"btn ghost menu","aria-expanded":open,onClick:()=>setOpen(!open)},open?"Close":"Menu")),
+    h("div",{className:"drawer"+(open?" open":"")},LINKS.map(([t,u])=>h("a",{key:u,href:u,onClick:()=>setOpen(false)},t)))))}
+
+// Reserved space for the 3D model. Put your canvas or <model-viewer> inside the .gl element. The chips float above it.
+function ModelSlot(){
+  const mv=e=>{const b=e.currentTarget.getBoundingClientRect(),s=e.currentTarget.style;s.setProperty("--px",((e.clientX-b.left)/b.width-.5)*2);s.setProperty("--py",((e.clientY-b.top)/b.height-.5)*2)};
+  return h("div",{className:"stage",id:"model",onPointerMove:mv},
+    [0,1,2].map(i=>h("span",{className:"ring",key:i,style:{"--i":i}})),
+    h("div",{className:"gl"},h("div",{className:"empty"},h(Mark,{big:true}),h("p",null,"Space reserved for the 3D model"))),
+    h("div",{className:"chip a"},h("small",null,"Grip, compared with unaffected hand"),h("b",null,h(Count,{to:82,suffix:"%"}))),
+    h("div",{className:"chip b"},h("small",null,"Tremor"),h("b",null,"Steady"),h("svg",{viewBox:"0 0 96 24","aria-hidden":"true"},h("path",{d:"M0 12 Q8 2 16 12 T32 12 T48 12 T64 12 T80 12 T96 12"}))))}
+
+const Hero=()=>h("main",{id:"top",className:"wrap hero"},
+  h("div",null,
+    h("h1",null,h("span",{className:"ln"},h("i",{style:{"--i":0}},"Small movements.")),h("span",{className:"ln"},h("i",{style:{"--i":1}},"Meaningful progress."))),
+    h("svg",{className:"ul",viewBox:"0 0 400 14","aria-hidden":"true"},h("path",{pathLength:1,d:"M2 8 C60 2 140 14 220 6 S340 4 398 9"})),
+    h("p",{className:"sub"},"A home-based hand rehabilitation system that guides structured exercises and gives physiotherapists measurable progress between clinic sessions."),
+    h("div",{className:"btns"},h("a",{className:"btn",href:"#progress",style:{padding:"16px 28px",fontSize:15}},"See an example report"),h("a",{className:"btn ghost",href:"#logo",style:{padding:"15px 24px",fontSize:15}},"View the brand")),
+    h("p",{className:"meta"},"Measures grip strength, sustained grip, movement and tremor. Supports physiotherapy and never replaces it.")),
+  h(ModelSlot));
+
+function Count({to,pre="",suffix=""}){
+  const r=useRef(),[v,setV]=useState(0);
+  useEffect(()=>{const calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const io=new IntersectionObserver(([e])=>{if(!e.isIntersecting)return;io.disconnect();if(calm){setV(to);return}
+      const t0=performance.now(),f=n=>{const k=Math.min(1,(n-t0)/1400);setV(Math.round(to*(1-Math.pow(1-k,3))));k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)});
+    io.observe(r.current);return()=>io.disconnect()},[to]);
+  return h("span",{ref:r},pre+v+suffix)}
+
+const Impact=()=>Sec("impact","Why home hand rehabilitation matters","Hand function underpins dressing, bathing and eating, yet recovery after stroke is often incomplete and home practice is difficult to sustain. Dexteria is designed around these figures.",
+  h("div",{className:"g g4"},[
+    [[h(Count,{to:67,pre:"≈",suffix:"%"})],"of stroke survivors have upper-limb limitations","Kwakkel et al., 2019"],
+    [[h(Count,{to:5}),"–",h(Count,{to:20,suffix:"%"})],"fully recover the upper limb six months after stroke","Kwakkel et al., 2019"],
+    [[h(Count,{to:13}),"–",h(Count,{to:140,suffix:"%"})],"range of adherence to prescribed home exercise doses","Neibling et al., 2021"],
+    [[h(Count,{to:4})],"measures tracked: grip strength, sustained grip, movement and tremor","Dexteria Smart Ball"]
+  ].map(([n,l,s],i)=>h("div",{className:"stat",key:i},h("b",null,...n),h("p",null,l),h("small",null,s)))));
+
+function Progress(){
+  const M=[["Grip pressure","units",[22,26,31,35,41,46,52,58],80],["Sustained hold","seconds",[3,4,5,7,8,10,12,14],20],["Steadiness","points",[48,52,58,63,69,74,80,85],95]];
+  const [t,setT]=useState(0),[hv,setHv]=useState(7);
+  const [,unit,d,base]=M[t],W=600,H=240,L=44,B=30,max=base*1.15,C=326.7,pct=Math.round(d[7]/base*100);
+  const x=i=>L+i*(W-L-16)/7,y=v=>H-B-v/max*(H-B-14),p=d.map((v,i)=>x(i)+","+y(v)),line="M"+p.join(" L");
+  const move=e=>{const b=e.currentTarget.getBoundingClientRect();setHv(Math.max(0,Math.min(7,Math.round(((e.clientX-b.left)/b.width*W-L)/((W-L-16)/7)))))};
+  return Sec("progress","Progress at a glance","Each session is recorded and compared with the person’s unaffected hand, so patients and physiotherapists can see change week by week. Select a measure, then hover over the chart.",
+    h("div",{className:"pg"},
+      h("div",{className:"card"},
+        h("div",{className:"tabs",role:"tablist"},M.map(([n],i)=>h("button",{key:n,role:"tab","aria-selected":t===i,className:"tab",onClick:()=>{setT(i);setHv(7)}},n))),
+        h("p",{className:"rd","aria-live":"polite"},`Week ${hv+1}: ${d[hv]} ${unit}, ${Math.round(d[hv]/base*100)}% of the unaffected hand`),
+        h("svg",{className:"chart",key:t,viewBox:`0 0 ${W} ${H}`,onPointerMove:move,role:"img","aria-label":"Line chart of weekly progress"},
+          [0,.25,.5,.75,1].map(f=>h("g",{key:f},h("line",{x1:L,x2:W-16,y1:y(max*f),y2:y(max*f),stroke:"var(--line)"}),h("text",{x:L-8,y:y(max*f)+4,textAnchor:"end"},Math.round(max*f)))),
+          d.map((_,i)=>h("text",{key:i,x:x(i),y:H-8,textAnchor:"middle"},"W"+(i+1))),
+          h("line",{x1:L,x2:W-16,y1:y(base),y2:y(base),stroke:"var(--gold)",strokeWidth:2,strokeDasharray:"6 5"}),
+          h("text",{x:W-16,y:y(base)-7,textAnchor:"end"},"Unaffected hand"),
+          h("line",{x1:x(hv),x2:x(hv),y1:14,y2:H-B,stroke:"var(--sage)",strokeDasharray:"3 4"}),
+          h("path",{className:"draw",pathLength:1,d:line,fill:"none",stroke:"var(--sage)",strokeWidth:4,strokeLinecap:"round",strokeLinejoin:"round"}),
+          d.map((v,i)=>h("circle",{key:i,cx:x(i),cy:y(v),r:i===hv?7:4,fill:i===hv?"var(--gold)":"var(--sage)"})))),
+      h("div",{className:"side"},
+        h("div",{className:"card"},h("h3",null,"Against unaffected hand"),
+          h("div",{className:"gauge",key:"g"+t},h("svg",{viewBox:"0 0 120 120",width:150,height:150},h("circle",{cx:60,cy:60,r:52,stroke:"var(--soft)"}),
+            h("circle",{cx:60,cy:60,r:52,stroke:"var(--sage)",transform:"rotate(-90 60 60)",style:{strokeDasharray:C,"--c":C,strokeDashoffset:C*(1-pct/100),animation:"gauge 1.3s var(--e) both"}})),h("b",null,h(Count,{to:pct,suffix:"%"})))),
+        h("div",{className:"card"},h("h3",null,"Sessions completed"),h("p",null,"Out of 7 prescribed each week"),
+          h("div",{className:"bars"},[4,5,5,6,7,6,7,7].map((v,i)=>h("div",{key:i,className:"barx",style:{"--i":i,height:v/7*100+"%"},title:`Week ${i+1}: ${v} of 7`})))))),
+    h("p",{className:"fine"},"Illustrative example data, not clinical results. Grip values are relative units until the ball is calibrated against a reference dynamometer."));}
+
+function InUse(){
+  const set=(e,x,y)=>{e.currentTarget.style.setProperty("--ry",x+"deg");e.currentTarget.style.setProperty("--rx",y+"deg")};
+  const tilt=e=>{const b=e.currentTarget.getBoundingClientRect();set(e,((e.clientX-b.left)/b.width-.5)*8,-((e.clientY-b.top)/b.height-.5)*8)};
+  return Sec("inuse","Brand in use","The identity carries through to the Smart Ball and the companion app, with the same forest, sage and cream palette. Move over an image to tilt it.",
+    h("div",{className:"g g2"},[["assets/images/smart-ball.jpg","Smart Ball, concept render"],["assets/images/dexteria-motion.jpg","Dexteria Motion pose screen, planned, concept render"]].map(([s,c])=>
+      h("div",{key:c},h("div",{className:"shot",onPointerMove:tilt,onPointerLeave:e=>set(e,0,0)},h("img",{src:s,alt:c})),h("p",{className:"cap2"},c)))))}
+
+function Motion(){
+  const [k,setK]=useState(0);
+  return Sec("motion","Motion","Motion is calm and purposeful. Headlines rise into place, progress draws itself, and feedback pulses outward like a squeeze. All motion is removed when a device requests reduced motion.",
+    h("div",{className:"g g3",key:k},
+      h("div",{className:"card"},h("div",{className:"demo2"},h("span",{className:"ln",style:{font:"600 26px var(--fd)"}},h("i",{style:{"--i":0}},"Small movements."))),h("h3",null,"Rise"),h("p",null,"Text slides up from a mask, one line at a time.")),
+      h("div",{className:"card"},h("div",{className:"demo2"},h("svg",{viewBox:"0 0 200 20",width:"80%"},h("path",{className:"dpath",pathLength:1,d:"M2 12 C40 2 80 20 120 10 S180 6 198 12",style:{animationDelay:"0s"}}))),h("h3",null,"Draw"),h("p",null,"Lines and charts draw themselves to show change.")),
+      h("div",{className:"card"},h("div",{className:"demo2"},[0,1,2].map(i=>h("span",{className:"ring",key:i,style:{"--i":i,width:70,margin:"-35px 0 0 -35px"}})),h(Mark)),h("h3",null,"Pulse"),h("p",null,"Rings spread outward like a squeeze.")))
+    ,h("button",{className:"btn ghost",style:{marginTop:14},onClick:()=>setK(k+1)},"Replay animations"),
+    h("p",{className:"fine"},"Easing: cubic-bezier(0.2, 0.8, 0.2, 1). Durations: 0.6 to 1.5 seconds."));}
+
+function ScrollBar(){
+  const r=useRef();
+  useEffect(()=>{const f=()=>{const m=document.documentElement.scrollHeight-innerHeight;r.current.style.transform=`scaleX(${m>0?scrollY/m:0})`};f();addEventListener("scroll",f,{passive:true});return()=>removeEventListener("scroll",f)},[]);
+  return h("i",{className:"bar",ref:r})}
+
+function Root(){
+  useEffect(()=>{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+    document.querySelectorAll(".rv").forEach(n=>io.observe(n));return()=>io.disconnect()},[]);
+  return h(React.Fragment,null,h(ScrollBar),h(Nav),h(Hero),h(Impact),h(Progress),h(Logo),h(InUse),h(Colour),h(Type),h(Components),h(Motion),h(Voice))}
+
+function Logo(){
+  const tiles=[["#F0ECE3","#1C2A20"],["#1C2A20","#F0ECE3"],["#829080","#1C2A20"]];
+  return Sec("logo","Logo","The mark combines an open hand with the letter D. Use the full lockup wherever space allows, and the mark alone for small spaces such as app icons. Leave clear space equal to the height of the D on every side.",
+    h("div",{className:"g g5"},
+      tiles.map(([b,w],i)=>h("div",{key:i},h("div",{className:"tile",style:{"--b":b,"--wc":w}},h(Lockup)),h("p",{className:"cap2"},["Lockup on cream","Lockup on forest","Lockup on sage"][i]))),
+      h("div",null,h("div",{className:"tile"},h(Mark,{big:true})),h("p",{className:"cap2"},"Mark")),
+      h("div",null,h("div",{className:"tile"},h(Word,{big:true})),h("p",{className:"cap2"},"Wordmark"))))}
+
+function Colour(){
+  const [c,setC]=useState("");
+  const main=[["Cream","#F0ECE3","Page background"],["Forest","#1C2A20","Text, buttons"],["Sage","#829080","Accent, headline"],["Gold","#C9A55A","Focus, highlights"]];
+  const aux=[["Surface","#FBF9F4"],["Stone","#E8E3D8"],["Mist","#DCE2D8"]];
+  const sw=([n,x,u])=>h("button",{key:x,className:"sw",onClick:()=>{try{navigator.clipboard.writeText(x).catch(()=>{})}catch(e){}setC(x)}},h("span",{style:{"--c":x}}),h("b",null,n),h("em",null,x,u&&h("br"),u));
+  return Sec("colour","Colour",c?`${c} has been copied. Select any swatch to copy its code.`:"A calm, natural palette that feels clinical without feeling cold. Forest and cream carry the page, sage and gold are used sparingly. Select a swatch to copy its code.",
+    h("div",{className:"g g4"},main.map(sw)),h("div",{className:"g g3",style:{marginTop:12}},aux.map(sw)))}
+
+function Type(){
+  const [t,setT]=useState("Small movements.");
+  return Sec("type","Typography","Manrope gives headlines a rounded, confident voice. DM Sans keeps body text open and easy to read, including for people with reduced vision. Type below to test.",
+    h("input",{className:"tester","aria-label":"Test text",value:t,onChange:e=>setT(e.target.value)}),
+    [["Display, Manrope 600, 64/68",{font:"600 clamp(36px,6vw,64px)/1.05 var(--fd)",letterSpacing:"-.035em"}],
+     ["Heading, Manrope 600, 32/38",{font:"600 32px/1.2 var(--fd)",letterSpacing:"-.025em"}],
+     ["Body, DM Sans 400, 17/28",{font:"400 17px/1.65 var(--fb)"}],
+     ["Caption, DM Sans 500, 13/20",{font:"500 13px/1.5 var(--fb)"}]].map(([l,s])=>h("div",{className:"row",key:l},h("small",null,l),h("span",{style:s},t||"Small movements."))))}
+
+function Components(){
+  const sp=[4,8,16,24,40,64];
+  return Sec("components","Components and shape","Rounded shapes and generous spacing keep the interface gentle. Buttons are fully rounded, cards use an 18 px radius, and large buttons and targets suit reduced grip and fine motor control.",
+    h("div",{className:"demo"},h("button",{className:"btn"},"Primary"),h("button",{className:"btn ghost"},"Secondary"),
+      h("input",{className:"tester",style:{width:240,margin:0},placeholder:"Text field","aria-label":"Text field"}),h("span",{className:"pill"},"Status label")),
+    h("div",{className:"g g3",style:{marginTop:22}},
+      h("div",{className:"card"},h("h3",null,"Card"),h("p",null,"18 px radius, one-pixel outline, no heavy shadows.")),
+      h("div",{className:"card",style:{background:"var(--soft)"}},h("h3",null,"Tinted card"),h("p",null,"Mist background for supporting information.")),
+      h("div",{className:"card",style:{borderColor:"var(--gold)",borderWidth:2}},h("h3",null,"Focus"),h("p",null,"Gold marks focus and the current selection."))),
+    h("div",{className:"sp"},sp.map(n=>h("div",{key:n,style:{flex:n}},h("i",{style:{height:n}}),n+" px"))))}
+
+const Voice=()=>Sec("voice","Voice","Dexteria speaks plainly, calmly and with respect. Instructions are short, written in sentence case, and never rush or pressure the person.",
+  h("div",{className:"g g3"},
+    [["Clear","Use short sentences and everyday words.","Complete today’s session.","Crush your workout!"],
+     ["Calm","Encourage steady progress, not intensity.","Well done. Your grip is steadier.","You’re on fire!"],
+     ["Respectful","Support the clinician, never replace them.","Share this report with your physiotherapist.","Skip the clinic."]]
+    .map(([t,d,y,n])=>h("div",{className:"card",key:t},h("h3",null,t),h("p",null,d),h("p",{className:"do"},"Say: "+y),h("p",{className:"do dont"},"Avoid: "+n)))));
+
+ReactDOM.createRoot(document.getElementById("root")).render(h(Root));
+</script>
+</body>
+</html>
