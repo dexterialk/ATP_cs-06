@@ -1,0 +1,29 @@
+@layer sections {
+/* 09 Team: a plain grid. The ball is off-screen here. */
+
+.team {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+.team-card { min-width: 0; }
+.team-card__photo {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--cream-2);
+}
+.team-card__name {
+  margin-top: 1rem;
+  font-size: var(--text-md);
+  overflow-wrap: anywhere;
+}
+.team-card__role { margin-top: 0.25rem; color: var(--muted); font-size: 0.9375rem; }
+
+}

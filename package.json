@@ -1,0 +1,26 @@
+{
+  "name": "dexteria-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dexteria Smart Ball landing page (Team CS-06)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "npm run build && node tests/check.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "playwright": "^1.65.1",
+    "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "animejs": "4.5.0",
+    "motion": "14.14.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.128.0"
+  }
+}

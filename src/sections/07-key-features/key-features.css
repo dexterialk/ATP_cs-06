@@ -1,0 +1,84 @@
+@layer sections {
+/* 07 Key Features.
+   Default: cards stacked on phones, a wrapping grid on wider screens.
+   With .is-pinned (desktop, motion allowed, fits on screen), the panel
+   sticks and vertical scrolling moves the track sideways with a transform. */
+
+.features {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+
+.features__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.features__head h2 { max-width: 16ch; }
+.features__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.features__status {
+  min-width: 3.5em;
+  text-align: center;
+  font-weight: 600;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.features__track {
+  width: min(var(--container), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  display: grid;
+  gap: 1.25rem;
+}
+@media (min-width: 640px) {
+  .features__track { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid rgb(28 42 32 / 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.feature__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--cream-2);
+}
+.feature__body { padding: 1.25rem 1.5rem 1.5rem; }
+.feature__text { margin-top: 0.5rem; color: var(--muted); }
+
+/* ---- Pinned horizontal track ---- */
+.features.is-pinned { padding-block: 0; }
+.features.is-pinned .features__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--nav-offset);
+  padding-bottom: 2rem;
+  overflow: hidden;
+}
+.features.is-pinned .features__head { margin-bottom: 2rem; }
+.features.is-pinned .features__track {
+  width: max-content;
+  margin: 0;
+  padding-inline: max(var(--gutter), (100vw - var(--container)) / 2);
+  display: flex;
+  gap: 1.5rem;
+  will-change: transform;
+}
+.features.is-pinned .feature { width: clamp(300px, 30vw, 380px); flex: none; }
+.features.is-pinned .feature__image { aspect-ratio: 16 / 10; }
+.features.is-pinned .feature.is-active { border-color: var(--green); }
+
+}

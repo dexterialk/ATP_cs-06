@@ -1,0 +1,44 @@
+@layer sections {
+/* 08 App Preview: tilted game cards, no phone frame.
+   Cards straighten and lift on hover. The tilt lives on the figure so it
+   never fights the .reveal transform on the list item. */
+
+.app-preview {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+.app-preview__head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.app-preview__head h2 { max-width: 18ch; }
+
+.app-preview__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2rem);
+  padding-inline: clamp(0px, 2vw, 1rem);
+}
+@media (min-width: 900px) {
+  .app-preview__cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .app-card:nth-child(even) { margin-top: 3rem; }
+}
+
+.app-card__figure {
+  transform: rotate(var(--tilt, 0deg));
+}
+.app-card__image {
+  width: 100%;
+  aspect-ratio: 1 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  border: 1px solid rgb(28 42 32 / 0.1);
+  box-shadow: var(--shadow-lg);
+}
+.app-card__caption {
+  margin-top: 0.875rem;
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+}

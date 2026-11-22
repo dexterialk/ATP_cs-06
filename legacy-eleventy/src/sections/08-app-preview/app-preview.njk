@@ -1,0 +1,32 @@
+{#- Prototype screenshots are placeholders. Keep the alt text in step with
+    whatever each screenshot shows. -#}
+{%- set screens = [
+  { img: "app-squeeze-game.svg", caption: "Balloon squeeze game", tilt: "-6deg",
+    alt: "Prototype game screen: squeeze the ball to lift a balloon over rolling hills. Score 120, 8 of 10 squeezes done." },
+  { img: "app-tilt-game.svg", caption: "Tilt maze game", tilt: "4deg",
+    alt: "Prototype game screen: tilt the ball to roll a marble along a winding path to a flower. Level 2." },
+  { img: "app-session-summary.svg", caption: "Session summary", tilt: "-3deg",
+    alt: "Prototype summary screen with sample data: session complete, grip pressure 42, 12 squeezes, 8 minutes." },
+  { img: "app-progress.svg", caption: "Weekly progress", tilt: "6deg",
+    alt: "Prototype progress screen with sample data: a line chart of grip pressure from Monday to Sunday reading 36, 38, 37, 40, 41, 42 and 42." }
+] -%}
+{% css %}@layer sections { {% include "src/sections/08-app-preview/app-preview.css" %} }{% endcss %}
+<section class="app-preview" id="app" aria-labelledby="app-title" data-ball-state="paused">
+  <div class="container">
+    <div class="app-preview__head">
+      <p class="section-label reveal">App preview</p>
+      <h2 id="app-title" class="reveal" style="--d: .1s">A first look at the Dexteria app.</h2>
+      <p class="section-intro reveal" style="--d: .2s">Early prototype screens. The designs will change before launch.</p>
+    </div>
+    <ul class="app-preview__cards" role="list">
+      {%- for screen in screens %}
+      <li class="app-card reveal" style="--d: {{ loop.index0 * 0.1 }}s">
+        <figure class="app-card__figure" style="--tilt: {{ screen.tilt }}">
+          <img class="app-card__image" src="/src/assets/images/app/{{ screen.img }}" alt="{{ screen.alt }}" width="360" height="720" loading="lazy" decoding="async">
+          <figcaption class="app-card__caption">{{ screen.caption }}</figcaption>
+        </figure>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>

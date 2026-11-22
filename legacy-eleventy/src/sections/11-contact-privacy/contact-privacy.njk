@@ -1,0 +1,34 @@
+{% css %}@layer sections { {% include "src/sections/11-contact-privacy/contact-privacy.css" %} }{% endcss %}
+<section class="contact" id="contact" aria-labelledby="contact-title" data-ball-state="rest">
+  <div class="contact__grid container">
+    <div class="contact__details">
+      <p class="section-label reveal">Your voice matters</p>
+      <h2 id="contact-title" class="reveal" style="--d: .1s">Contact and privacy</h2>
+      <p class="contact__intro reveal" style="--d: .2s">We’re building something meaningful, and we’d love to hear from you. Share your thoughts and help us shape what comes next.</p>
+      <dl class="contact__list reveal" style="--d: .3s">
+        <div>
+          <dt>Email</dt>
+          <dd><a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a></dd>
+        </div>
+        <div>
+          <dt>Who we are</dt>
+          <dd>Team <span translate="no">{{ site.team }}</span>, Agile Team Project, University of Westminster</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="contact__privacy reveal" style="--d: .2s">
+      <h3>Your privacy, in short</h3>
+      <ul class="contact__points">
+        <li>We only collect your email address, and only with your consent.</li>
+        <li>We use it to send Dexteria updates. We never sell it.</li>
+        <li>Our email provider, Brevo, stores it securely for us.</li>
+        <li>You can unsubscribe, or ask us to see or delete your data, at any time.</li>
+      </ul>
+      <p class="contact__law">We follow UK GDPR and Sri Lanka’s Personal Data Protection Act No.&nbsp;9 of 2022.</p>
+      <a class="button" href="/privacy/">Read the full privacy notice
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

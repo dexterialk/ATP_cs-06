@@ -1,0 +1,82 @@
+@layer tokens {
+/* Design tokens: colours, type scale, spacing, motion durations.
+   Wrapped in @layer tokens by base.njk. */
+:root {
+  /* Colour. Contrast ratios are against --cream unless noted. */
+  --cream: #f0ece3;          /* page background */
+  --cream-2: #e4dfd3;        /* subtle fills; never put --sage-text on it (4.08:1) */
+  --white: #fffdf8;          /* cards, inputs */
+  --green: #1c2a20;          /* main text 12.71:1, dark panels */
+  --green-hover: #344a38;    /* button hover; cream on it 8.16:1 */
+  --green-line: #526454;     /* decorative lines on dark green */
+  --sage: #879585;           /* DECORATIVE SHAPES ONLY: 2.67:1, never text */
+  --sage-text: #5f6e5c;      /* sage text 4.60:1 (5.34:1 on --white) */
+  --muted: #5c6358;          /* body and muted text 5.27:1 (6.11:1 on --white) */
+  --on-green: #f0ece3;       /* text on --green 12.71:1 */
+  --on-green-muted: #c2c9be; /* 8.84:1 on --green */
+  --on-green-label: #a5b3a0; /* 6.82:1 on --green */
+  --line: #d8d5cb;           /* decorative dividers */
+  --field-border: #737a6f;   /* form control borders, 3:1+ on --white */
+  --error: #9e2a1f;          /* 6.35:1 on cream, 7.37:1 on white */
+  --success: #2f6b3a;        /* 5.42:1 on cream */
+
+  /* Focus ring: outline colour plus a contrasting halo. */
+  --focus: var(--green);
+  --focus-halo: var(--cream);
+
+  /* Type */
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-xs: 0.6875rem;  /* 11px labels */
+  --text-sm: 0.8125rem;  /* 13px buttons, footer */
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lead: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-h2: clamp(1.875rem, 1.4rem + 2vw, 2.8125rem);
+  --text-h1: clamp(2.625rem, 1.6rem + 5.2vw, 5.125rem);
+  --text-marquee: clamp(2.125rem, 1.4rem + 3.4vw, 3.75rem);
+
+  /* Space */
+  --gutter: clamp(16px, 5vw, 40px);
+  --container: 1120px;
+  --section-pad: clamp(4.5rem, 3rem + 6vw, 7.5rem);
+
+  /* Shape. Nested radii: children use the next size down. */
+  --radius: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(28 42 32 / 0.06), 0 2px 8px rgb(28 42 32 / 0.05);
+  --shadow: 0 1px 2px rgb(28 42 32 / 0.06), 0 12px 32px rgb(28 42 32 / 0.1);
+  --shadow-lg: 0 2px 4px rgb(28 42 32 / 0.06), 0 24px 60px rgb(28 42 32 / 0.16);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur: 0.6s;
+  --dur-slow: 0.9s;
+  --dur-spin: 1.4s;
+  --dur-float: 6s;
+  --dur-marquee: 28s;
+
+  /* Ball choreography. One damping constant for every preset: higher = snappier.
+     The ball covers 1 - e^(-k*t) of the remaining distance after t seconds. */
+  --ball-damping: 8;
+  --ball-layer-fade: 300ms; /* total time to fade out, switch layer, fade in */
+
+  /* Floating nav. --nav-h is updated by nav.js if the nav grows (text zoom). */
+  --nav-top: calc(12px + env(safe-area-inset-top, 0px));
+  --nav-h: 60px;
+  --nav-offset: calc(var(--nav-top) + var(--nav-h) + 16px);
+
+  /* Stacking. The ball sits above the page background, below all content. */
+  --z-ball: 1;
+  --z-content: 2;
+  --z-ball-front: 3; /* ball in front of content (hero only); still below the nav */
+  --z-nav: 50;
+  --z-skip: 100;
+}
+
+}

@@ -1,0 +1,31 @@
+@layer sections {
+/* 05 Banner: a wide dark strip the ball emerges from. */
+
+.banner {
+  --ball: min(300px, 64vw);
+  position: relative;
+  padding-top: calc(var(--ball) * 0.75 + var(--section-pad) * 0.5);
+}
+
+/* Bottom quarter of the slot sits behind the strip. */
+.banner__ball-slot {
+  position: absolute;
+  top: calc(var(--section-pad) * 0.5);
+  left: 50%;
+  width: var(--ball);
+  height: var(--ball);
+  margin-left: calc(var(--ball) / -2);
+  pointer-events: none;
+}
+
+.banner__strip {
+  position: relative;
+  z-index: var(--z-content);
+  padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  text-align: center;
+}
+.banner__inner { max-width: 46rem; }
+.banner__strip h2 { margin-bottom: 1.125rem; }
+.banner__text { color: var(--on-green-muted); font-size: var(--text-md); line-height: 1.75; }
+
+}

@@ -1,0 +1,34 @@
+{% css %}@layer sections { {% include "src/sections/02-hero/hero.css" %} }{% endcss %}
+<section class="hero" id="top" aria-labelledby="hero-title" data-ball-state="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__orb hero__orb--a motion-loop"></div>
+    <div class="hero__orb hero__orb--b motion-loop"></div>
+    <div class="hero__orb hero__orb--c motion-loop"></div>
+    <div class="hero__ring motion-loop"></div>
+    <div class="hero__ring hero__ring--inner motion-loop"></div>
+  </div>
+
+  <div class="hero__inner container">
+    <p class="eyebrow hero__fade" style="--d: .1s">A new chapter is taking shape</p>
+    <h1 class="hero__title" id="hero-title">
+      <span class="hero__word"><span style="--i: 0">Move.</span></span>
+      <span class="hero__word accent"><span style="--i: 1">Mend.</span></span>
+      <span class="hero__word"><span style="--i: 2">Master.</span></span>
+    </h1>
+
+    {#- The Smart Ball (fixed layer) centres itself on this empty slot. -#}
+    <div class="hero__ball-slot" data-ball-anchor="hero" aria-hidden="true"></div>
+
+    <p class="hero__lead hero__fade" style="--d: .7s">Small movements. <span class="accent">Meaningful progress.</span></p>
+    <p class="hero__description hero__fade" style="--d: .85s">Something new is coming to the world of hand dexterity. A little more movement, a little more possibility.</p>
+    <div class="hero__actions hero__fade" style="--d: 1s">
+      <a href="#waitlist" class="button">Be the first to know
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+      </a>
+      <button type="button" class="control hero__spin" data-ball-spin hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+        Spin the ball
+      </button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+@layer sections {
+/* 03 Marquee: continuously scrolling "Move · Mend · Master" band.
+   Pauses on hover, on focus, with its own button, and with "Pause motion". */
+
+.marquee {
+  position: relative;
+  z-index: var(--z-content); /* opaque band: the ball passes behind it */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.625rem;
+  padding-right: var(--gutter);
+  background: var(--cream);
+  border-block: 1px solid var(--line);
+}
+
+.marquee__viewport { flex: 1; min-width: 0; overflow: hidden; }
+.marquee__track {
+  display: flex;
+  width: max-content;
+}
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track,
+.marquee.is-paused .marquee__track { animation-play-state: paused; }
+
+.marquee__track p {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  padding-right: 2.25rem;
+  font-family: var(--font-display);
+  font-size: var(--text-marquee);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.marquee__track b {
+  font-weight: 500;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--sage-text);
+}
+.marquee__track i {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+.marquee__pause { flex: none; }
+.marquee__icon-play { display: none; }
+.marquee__pause[aria-pressed="true"] .marquee__icon-pause { display: none; }
+.marquee__pause[aria-pressed="true"] .marquee__icon-play { display: block; }
+
+@media (forced-colors: active) {
+  .marquee__track b { color: CanvasText; -webkit-text-stroke: 0; }
+}
+
+/* Calm mode: the band is static, so the pause button is not needed. */
+:root[data-calm="on"] .marquee__pause { display: none; }
+
+}
