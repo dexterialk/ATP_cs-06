@@ -1,0 +1,162 @@
+/* Raika 01: the problem (stats): rules used only by this section. */
+@layer sections {
+  .dx-stats{
+    list-style: none; padding: 0; margin: clamp(48px, 6vw, 80px) 0 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+
+  .dx-stat:first-child .dx-stat__label{ color: var(--dx-on-dark-muted); }
+
+  .dx-stat__num{ font-size: clamp(40px, 4.4vw, 60px); font-weight: 700; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+
+  .dx-stat__pre{ display: block; font-size: 14px; font-weight: 600; letter-spacing: 0; margin-bottom: 6px; color: var(--dx-sage-d); }
+
+  .dx-stat:first-child .dx-stat__pre{ color: #A9B8A4; }
+
+  .dx-stat__label{ font-size: 15px; line-height: 1.45; color: var(--dx-muted); }
+
+  @media (max-width: 960px){
+    .dx-stats{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px){
+    .dx-stats{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- stats: pop-out version ---------- */
+  .dx-stats{ gap: 18px; }
+
+  .dx-stat__num{ font-size: clamp(52px, 5.6vw, 84px); letter-spacing: -.05em; }
+
+  .dx-stat__label{ font-size: 16px; font-weight: 500; color: var(--dx-ink); max-width: 22ch; }
+
+  /* The small animation sits right under the text (not pushed to the card's bottom), and the cards are only as
+     tall as their content. The grid still makes all four the same height. */
+  .dx-stat{ min-height: 0; }
+  .dx-stat__viz{ margin-top: 0; padding-top: 16px; }
+
+  /* card colours */
+  .dx-stat--ink{ background: var(--dx-ink); border-color: var(--dx-ink); color: var(--dx-on-dark); }
+
+  .dx-stat--ink .dx-stat__label{ color: var(--dx-on-dark); }
+
+  .dx-stat--ink .dx-stat__src{ color: #A9B8A4; }
+
+  .dx-stat--sage{ background: #DDE3D6; border-color: #CFD7C7; }
+
+  .dx-stat--sage .dx-stat__num{ color: #3E4B3F; }
+
+  .dx-stat--amber{ background: #F6E8D6; border-color: #EEDBC2; }
+
+  .dx-stat--amber .dx-stat__num, .dx-stat--amber .dx-stat__pre{ color: #8A5520; }
+
+  .dx-stat--amber .dx-stat__src{ color: #8A5520; }
+
+  .dx-stat--cream{ background: var(--dx-card); }
+
+  /* reset old first-child rule */
+  .dx-stat:first-child .dx-stat__pre{ color: inherit; }
+
+  /* viz: pulse (12.2M) */
+  .dx-viz-pulse{ display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--dx-on-dark-muted); }
+
+  .dx-viz-pulse__dot{ position: relative; width: 14px; height: 14px; border-radius: 50%; background: #E3B985; flex: none; }
+
+  .dx-viz-pulse__dot::after{ content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #E3B985; animation: dx-ping 2.6s cubic-bezier(.2,.6,.3,1) infinite; }
+
+  /* viz: 10 bars (80%) */
+  .dx-viz-bars{ display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; align-items: end; height: 46px; }
+
+  .dx-viz-bars span{ display: block; height: 100%; border-radius: 6px; background: rgba(62,75,63,.15); transform: scaleY(.15); transform-origin: bottom;
+    transition: transform .6s cubic-bezier(.3,1.4,.5,1); transition-delay: calc(.5s + var(--i) * 70ms); }
+
+  .dx-viz-bars span.on{ background: #3E4B3F; }
+
+  .dx-stat.is-in .dx-viz-bars span{ transform: scaleY(1); }
+
+  .dx-stat.is-in .dx-viz-bars span:not(.on){ transform: scaleY(.45); }
+
+  @media (prefers-reduced-motion: reduce){
+    .dx-viz-bars span{ transform: scaleY(1) !important; }
+  }
+
+  .dx-viz-bars--4{ grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+  .dx-stat--ink .dx-viz-people path, .dx-stat--ink .dx-viz-people circle{ fill: rgba(240,236,227,.18); }
+
+  .dx-stat--ink .dx-viz-people .hit path, .dx-stat--ink .dx-viz-people .hit circle{ fill: #E3B985; }
+
+  .dx-stat--ink .dx-stat__pre{ color: #A9B8A4; }
+
+  .dx-stat__num{ white-space: nowrap; }
+
+  .dx-stat--cream .dx-stat__num{ font-size: clamp(44px, 4.6vw, 70px); }
+
+  .dx-hero-stat .dx-viz-pulse{ margin-top: 14px; color: #E3B985; font-weight: 600; }
+
+  /* 5 cards: 3 "who it affects" on top, 2 "why home practice fails" below */
+  .dx-stats{ grid-template-columns: repeat(6, 1fr); }
+
+  .dx-stats > .dx-stat{ grid-column: span 2; }
+
+  .dx-stats > .dx-stat:nth-child(n+4){ grid-column: span 3; min-height: 280px; }
+
+  .dx-stat--ink .dx-viz-bars span{ background: rgba(240,236,227,.15); }
+
+  .dx-stat--ink .dx-viz-bars span.on{ background: #E3B985; }
+
+  /* tremor squiggle */
+  .dx-viz-tremor{ width: 100%; max-width: 220px; height: 46px; }
+
+  .dx-viz-tremor path{ fill: none; stroke: #5F6E5C; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 400; stroke-dashoffset: 400; transition: stroke-dashoffset 1.6s .4s ease; }
+
+  .dx-stat.is-in .dx-viz-tremor path{ stroke-dashoffset: 0; }
+
+  @media (max-width: 960px){
+    .dx-stats{ grid-template-columns: 1fr 1fr; }
+    .dx-stats > .dx-stat, .dx-stats > .dx-stat:nth-child(n+4){ grid-column: auto; }
+    .dx-stats > .dx-stat:last-child{ grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 640px){
+    .dx-stats{ grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .dx-viz-tremor path{ stroke-dashoffset: 0 !important; }
+  }
+
+  .dx-stats{ grid-template-columns: repeat(3, 1fr); }
+
+  .dx-stats > .dx-stat, .dx-stats > .dx-stat:nth-child(n+4){ grid-column: auto; min-height: 320px; }
+
+  @media (max-width: 960px){
+    .dx-stats{ grid-template-columns: 1fr 1fr; }
+    .dx-stats > .dx-stat:last-child{ grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 640px){
+    .dx-stats{ grid-template-columns: 1fr; }
+  }
+
+  .dx-stats .dx-stat--sage:first-child{ background: #DDE3D6; border-color: #CFD7C7; color: var(--dx-ink); }
+
+  .dx-stats .dx-stat--sage:first-child .dx-stat__label{ color: var(--dx-ink); }
+
+  .dx-stats .dx-stat--sage:first-child .dx-stat__src{ color: var(--dx-sage-d); }
+
+  /* final: 4 equal cards in one row */
+  .dx-stats{ grid-template-columns: repeat(4, 1fr); }
+
+  .dx-stats > .dx-stat, .dx-stats > .dx-stat:nth-child(n+4), .dx-stats > .dx-stat:last-child{ grid-column: auto; min-height: 340px; }
+
+  .dx-stat__label small{ display: block; margin-top: 8px; font-size: 14px; font-weight: 400; opacity: .8; }
+
+  @media (max-width: 960px){
+    .dx-stats{ grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px){
+    .dx-stats{ grid-template-columns: 1fr; }
+  }
+}

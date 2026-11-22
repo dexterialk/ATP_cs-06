@@ -1,0 +1,19 @@
+/* Vinuri 03 (Impact): rules used only by this section. Shared rules are in ../vn-shared/vn-shared.css. */
+@layer sections {
+  /* Open stat band: four large figures on the page background, separated by thin lines (no boxes). */
+  .vn-impact .g4 { gap: 0; margin-top: 36px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .vn-impact .stat { padding: 32px 28px 34px; border: 0; border-left: 1px solid var(--line); border-radius: 0; background: transparent; }
+  .vn-impact .stat:first-child { border-left: 0; padding-left: 0; }
+  .vn-impact .stat b { display: block; font: 600 clamp(36px, 3.5vw, 52px)/1.05 var(--fd); letter-spacing: -.04em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .vn-impact .stat p { margin: 14px 0 0; font-size: 15px; line-height: 1.55; color: var(--ink2); }
+  .vn-impact .stat .what { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 960px) {
+    .vn-impact .stat:nth-child(odd) { border-left: 0; padding-left: 0; }
+    .vn-impact .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    .vn-impact .stat { border-left: 0; padding-left: 0; padding-block: 24px; }
+    .vn-impact .stat + .stat { border-top: 1px solid var(--line); }
+  }
+}

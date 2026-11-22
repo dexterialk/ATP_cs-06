@@ -1,0 +1,49 @@
+/* Shared styles for the Vinuri sections (Impact and Progress).
+   The teammate's original CSS was a whole brand-guide page with global rules for
+   body, header, nav, a and h1. Only what these two sections use is kept here, and
+   everything is scoped under .vn so nothing leaks into the rest of the site. */
+@layer sections {
+  /* Inside these sections every element goes back to the browser default (zero specificity),
+     so the site's global base styles do not change how the teammate's design looks. */
+  :where(.vn, .vn :not(svg, svg *)) { all: revert; }
+  /* SVG drawings keep their own stroke and fill attributes; only undo what the site base adds to <svg>. */
+  :where(.vn svg) { display: inline; max-width: none; }
+
+  .vn {
+    --bg: #F0ECE3; --bg2: #E8E3D8; --surface: #FBF9F4; --ink: #1C2A20; --ink2: #4A574C;
+    --sage: #829080; --soft: #DCE2D8; --gold: #C9A55A; --line: rgba(28, 42, 32, .14);
+    --fd: "Manrope", "DM Sans", system-ui, sans-serif; --fb: "DM Sans", system-ui, sans-serif;
+    --e: cubic-bezier(.2, .8, .2, 1);
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 17px/1.65 var(--fb);
+    box-sizing: border-box;
+  }
+  .vn *, .vn *::before, .vn *::after { box-sizing: inherit; }
+
+  .vn__box { width: min(1160px, 100% - 40px); margin-inline: auto; border-top: 1px solid var(--line); padding: 56px 0; }
+  .vn h2 { font: 600 clamp(28px, 3.4vw, 40px)/1.15 var(--fd); letter-spacing: -.025em; margin: 0 0 8px; color: var(--ink); }
+  .vn .intro { color: var(--ink2); max-width: 42em; margin: 0 0 28px; }
+
+  .vn .g { display: grid; gap: 12px; }
+  .vn .g4 { grid-template-columns: repeat(4, 1fr); }
+
+  .vn .card { border: 1px solid var(--line); border-radius: 18px; padding: 22px; background: var(--surface); }
+  .vn .card h3 { font: 600 18px var(--fd); margin: 0 0 6px; }
+  .vn .card p { margin: 0; color: var(--ink2); font-size: 15px; }
+
+  .vn .rv { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--e), transform .9s var(--e); }
+  .vn .rv.in { opacity: 1; transform: none; }
+
+  @keyframes vn-drawl { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes vn-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes vn-gauge { from { stroke-dashoffset: var(--c); } }
+
+  @media (max-width: 900px) {
+    .vn .g4 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vn *, .vn *::before, .vn *::after { animation: none !important; transition: none !important; }
+    .vn .rv { opacity: 1; transform: none; }
+  }
+}

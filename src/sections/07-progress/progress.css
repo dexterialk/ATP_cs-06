@@ -1,0 +1,28 @@
+/* Vinuri 04 (Progress): rules used only by this section. Shared rules are in ../vn-shared/vn-shared.css. */
+@layer sections {
+  .vn-progress .pg { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+  .vn-progress .side { display: grid; gap: 12px; align-content: start; }
+  .vn-progress .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .vn-progress .tab { font: 500 14px var(--fb); border: 1px solid var(--line); background: none; color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+  .vn-progress .tab[aria-selected=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .vn-progress .chart { width: 100%; height: auto; display: block; touch-action: pan-y; }
+  .vn-progress .chart text { fill: var(--ink2); font: 12px var(--fb); }
+  .vn-progress .draw { stroke-dasharray: 1; }
+  .vn-progress .rv.in .draw { animation: vn-drawl 1.5s var(--e) both; }
+  .vn-progress .rd { font-size: 14px; color: var(--ink2); margin: 0 0 6px; min-height: 24px; }
+  .vn-progress .bars { display: flex; align-items: flex-end; gap: 8px; height: 96px; margin-top: 10px; }
+  .vn-progress .barx { flex: 1; background: var(--sage); border-radius: 6px 6px 2px 2px; transform-origin: bottom; transform: scaleY(0); }
+  .vn-progress .rv.in .barx { animation: vn-grow .9s var(--e) both; animation-delay: calc(var(--i) * 70ms); }
+  .vn-progress .gauge { display: grid; place-items: center; position: relative; }
+  .vn-progress .gauge b { position: absolute; font: 600 28px var(--fd); }
+  .vn-progress .gauge circle { fill: none; stroke-width: 10; stroke-linecap: round; }
+  .vn-progress .fine { font-size: 13px; color: var(--ink2); margin: 14px 2px 0; }
+
+  @media (max-width: 900px) {
+    .vn-progress .pg { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vn-progress .barx { transform: none; }
+    .vn-progress .draw { stroke-dashoffset: 0; }
+  }
+}

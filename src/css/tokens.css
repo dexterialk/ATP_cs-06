@@ -8,6 +8,9 @@
   --white: #fffdf8;          /* cards, inputs */
   --green: #1c2a20;          /* main text 12.71:1, dark panels */
   --green-hover: #344a38;    /* button hover; cream on it 8.16:1 */
+  --button: #b7bab8;         /* button fill; dark green text on it 7.66:1 (cream would be 1.66:1, which fails) */
+  --button-hover: #a4a8a5;   /* button hover: a little darker, dark green text on it 6.5:1 */
+  --logo: #636559;           /* logo colour (the logo PNGs are drawn in this colour) */
   --green-line: #526454;     /* decorative lines on dark green */
   --sage: #879585;           /* DECORATIVE SHAPES ONLY: 2.67:1, never text */
   --sage-text: #5f6e5c;      /* sage text 4.60:1 (5.34:1 on --white) */
@@ -61,10 +64,6 @@
   --dur-float: 6s;
   --dur-marquee: 28s;
 
-  /* Ball choreography. One damping constant for every preset: higher = snappier.
-     The ball covers 1 - e^(-k*t) of the remaining distance after t seconds. */
-  --ball-damping: 8;
-  --ball-layer-fade: 300ms; /* total time to fade out, switch layer, fade in */
 
   /* Floating nav. --nav-h is updated by nav.js if the nav grows (text zoom). */
   --nav-top: calc(12px + env(safe-area-inset-top, 0px));

@@ -17,12 +17,19 @@ export default function DexteriaBall({
   interactive = true,      // false = it floats on its own but ignores the pointer
   pauseOnScroll = true,    // true = no lean / squeeze while the page is scrolling
   logo = "d",              // "d" (letter only) or "full" (letter + dexteria)
-  color = "#8C9986",
+  color = "#808475",       // CHANGED: brand ball colour (was #8C9986)
   background = "#EDEAE2",  // "transparent" to let your page show through
   hint = "Press and hold to squeeze", // "" to hide
   fallbackSrc = "",        // still image shown when WebGL is unavailable
-  logoSpan = 1.25,         // smaller = bigger logo
+  logoSpan = 1.25,         // size of the area the logo map covers, in ball radii: smaller = smaller logo (the old note said the opposite)
+  logoOffset = [0, 0],     // CHANGED: moves the logo on the ball (x right, y up, in ball radii); the reference has it low and to the left
   engrave = 1.0,           // engraving depth
+  shadow: showShadow = true, // false = no ground shadow inside the component (the page draws its own)
+  floatAmp = 0.06,         // height of the slow vertical bob, in ball radii
+  maxPixelRatio = 2,       // cap on the render resolution (lower = lighter on the GPU)
+  dragRotate = false,      // true = drag the ball to turn it (press-and-hold no longer squeezes)
+  onBob,                   // called every frame with the bob position, -1 (low) to 1 (high)
+  onReady,                 // called once, after the first frame has been drawn
   buttonDir = [0.78, 0.4, 0.48],
   className,
   style,
@@ -34,6 +41,7 @@ export default function DexteriaBall({
   const offset = useRef({ rx: 0, ry: 0 })     // extra rotation set through setTransform
   const actions = useRef({})                  // spin / squeeze, filled in by the scene below
   const btnKey = buttonDir.join(",")
+  const logoKey = logoOffset.join(",") // CHANGED: so a new logo offset rebuilds the ball
 
   useImperativeHandle(ref, () => ({
     setTransform({ x = 0, y = 0, scale = 1, rx = 0, ry = 0, rz = 0 } = {}) {
@@ -49,6 +57,7 @@ export default function DexteriaBall({
 
   useEffect(() => {
     const root = rootRef.current, shadow = shadowRef.current, hintEl = hintRef.current
+    const docEl = document.documentElement
     if (!root) return
     const D2R = Math.PI / 180
     const reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -63,15 +72,15 @@ export default function DexteriaBall({
       return
     }
     renderer.outputEncoding = THREE.sRGBEncoding
-    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0 // brighter, highlights stay unclipped
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.72 /* CHANGED: was 1.0 */ // brighter, highlights stay unclipped
     const cvs = renderer.domElement
     cvs.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block"
     root.insertBefore(cvs, root.firstChild)
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50)
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xe3ddcf, 0.8))
-    const key = new THREE.DirectionalLight(0xfff4e6, 0.85); key.position.set(-3, 4, 4); scene.add(key)
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xe3ddcf, 0.45) /* CHANGED: softer light so #808475 reads as that colour (was 0.8) */)
+    const key = new THREE.DirectionalLight(0xfff4e6, 0.6) /* CHANGED: was 0.85 */; key.position.set(-3, 4, 4); scene.add(key)
     const fill = new THREE.DirectionalLight(0xffffff, 0.4); fill.position.set(4, 0.5, 2); scene.add(fill)
     const rim = new THREE.DirectionalLight(0xffffff, 0.2); rim.position.set(2, 2, -3); scene.add(rim)
 
@@ -102,9 +111,9 @@ export default function DexteriaBall({
       A.copy(Math.abs(V.y) < 0.99 ? Y : XV).cross(V).negate().normalize()
       B.copy(V).cross(A).normalize()
       t1s.set([A.x, A.y, A.z], i * 3); t2s.set([B.x, B.y, B.z], i * 3)
-      if (V.z > 0) uv.setXY(i, V.x / logoSpan + 0.5, V.y / logoSpan + 0.5); else uv.setXY(i, 5, 5)
+      if (V.z > 0) uv.setXY(i, (V.x - logoOffset[0]) / logoSpan + 0.5, (V.y - logoOffset[1]) / logoSpan + 0.5) // CHANGED: logoOffset added; else uv.setXY(i, 5, 5)
     }
-    const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(color).convertSRGBToLinear(), roughness: 0.6, metalness: 0, envMapIntensity: 0.55 })
+    const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(color).convertSRGBToLinear(), roughness: 0.84, metalness: 0, envMapIntensity: 0.4 }) // CHANGED: matte, soft finish like the reference picture (was roughness 0.6, envMapIntensity 0.55)
     const ball = new THREE.Mesh(geo, mat)
     const group = new THREE.Group(); group.rotation.order = "YXZ"; group.add(ball); scene.add(group)
 
@@ -153,7 +162,7 @@ export default function DexteriaBall({
       const cv = document.createElement("canvas"); cv.width = cv.height = 512
       const cx = cv.getContext("2d"); cx.drawImage(img, 0, 0)
       const id = cx.getImageData(0, 0, 512, 512), d = id.data
-      for (let i = 0; i < d.length; i += 4) { const k = 255 * (0.7 + (0.3 * d[i]) / 255); d[i] = d[i + 1] = d[i + 2] = k; d[i + 3] = 255 }
+      for (let i = 0; i < d.length; i += 4) { const k = 255 * (0.78 + (0.22 * d[i]) / 255); d[i] = d[i + 1] = d[i + 2] = k; d[i + 3] = 255 } // CHANGED: logo tint is 0.78x the ball colour (was 0.7x), which gives #636559 on #808475
       cx.putImageData(id, 0, 0)
       const cmap = new THREE.CanvasTexture(cv); cmap.encoding = THREE.sRGBEncoding
       const bmap = new THREE.Texture(img)
@@ -171,13 +180,15 @@ export default function DexteriaBall({
     let W = 1, H = 1, pxU = 100
     const resize = () => {
       W = Math.max(1, root.clientWidth); H = Math.max(1, root.clientHeight)
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(W, H, false)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxPixelRatio)); renderer.setSize(W, H, false)
       camera.aspect = W / H
       const z = Math.max(5.6, 2.0 / (Math.tan(14 * D2R) * camera.aspect))
       camera.position.set(0, 0, z); camera.lookAt(0, 0, 0); camera.updateProjectionMatrix()
       pxU = H / (2 * z * Math.tan(14 * D2R))
-      shadow.style.width = pxU * 1.9 + "px"; shadow.style.height = pxU * 0.3 + "px"
-      shadow.style.top = H / 2 + pxU * 1.2 + "px"
+      if (shadow) {
+        shadow.style.width = pxU * 1.9 + "px"; shadow.style.height = pxU * 0.3 + "px"
+        shadow.style.top = H / 2 + pxU * 1.2 + "px"
+      }
       const hit = hitRef.current
       if (hit) { hit.style.width = hit.style.height = pxU * 2 + "px"; hit.style.left = W / 2 - pxU + "px"; hit.style.top = H / 2 - pxU + "px" }
       if (!animate) renderer.render(scene, camera)
@@ -193,7 +204,29 @@ export default function DexteriaBall({
       // The container can be scaled by setTransform, so convert screen pixels back to layout pixels
       const setPtr = (e) => { const r = root.getBoundingClientRect(), sx = W / (r.width || W), sy = H / (r.height || H); ptr.x = (e.clientX - r.left) * sx; ptr.y = (e.clientY - r.top) * sy; ptr.over = true }
       const scrolling = () => pauseOnScroll && performance.now() < scrollUntil
-      const onMove = (e) => { if (interactive) setPtr(e) }
+      // Drag to rotate: turn the ball by the pointer distance, keep turning with a little inertia, then settle back.
+      // A press squeezes the ball (as always). If the pointer then travels more than a few pixels, the squeeze lets go
+      // and the gesture becomes a turn. So touch, mouse and pen all squeeze on a tap or hold and turn on a drag.
+      const drag = { on: false, pending: false, sx: 0, sy: 0, x: 0, y: 0, t: 0, yaw: 0, pitch: 0, vyaw: 0, vpitch: 0 }
+      const onMove = (e) => {
+        if (interactive) setPtr(e)
+        if (drag.pending && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 10) {
+          drag.pending = false; drag.on = true; down = false
+          drag.x = e.clientX; drag.y = e.clientY; drag.t = performance.now()
+          document.addEventListener("selectstart", noSelect)
+          docEl.classList.add("is-turning-ball"); getSelection()?.removeAllRanges() // CSS switches text selection off while turning
+          root.style.cursor = "grabbing"
+        }
+        if (drag.on) {
+          const now = performance.now(), dt = Math.max(1, now - drag.t) / 1000
+          const dx = e.clientX - drag.x, dy = e.clientY - drag.y
+          drag.x = e.clientX; drag.y = e.clientY; drag.t = now
+          const k = 2.6 / pxU // one ball radius of drag is about 150 degrees
+          drag.yaw += dx * k; drag.pitch = Math.max(-0.9, Math.min(0.9, drag.pitch + dy * k))
+          drag.vyaw = (dx * k) / dt; drag.vpitch = (dy * k) / dt
+        }
+      }
+      const noSelect = (e) => e.preventDefault()
       const onLeave = () => { ptr.over = false }
       const onDown = (e) => {
         if (!interactive || scrolling()) return
@@ -203,10 +236,16 @@ export default function DexteriaBall({
         if (h) {
           C.copy(ball.worldToLocal(h.point.clone())).normalize()
           down = true; if (hintEl) hintEl.style.opacity = 0
-          if (e.pointerType === "mouse") { try { root.setPointerCapture(e.pointerId) } catch (_) {} }
+          if (dragRotate) { drag.pending = true; drag.sx = e.clientX; drag.sy = e.clientY; drag.vyaw = drag.vpitch = 0 }
+          // Capture for every pointer type so a turn that leaves the ball is not lost (touch scrolling still works: touch-action is pan-y).
+          try { root.setPointerCapture(e.pointerId) } catch (_) {}
         }
       }
-      const onUp = (e) => { down = false; if (e && e.pointerType && e.pointerType !== "mouse") ptr.over = false }
+      const onUp = (e) => {
+        down = false; drag.pending = false
+        if (drag.on) { drag.on = false; root.style.cursor = "grab"; document.removeEventListener("selectstart", noSelect); docEl.classList.remove("is-turning-ball") }
+        if (e && e.pointerType && e.pointerType !== "mouse") ptr.over = false
+      }
       const onScroll = () => { scrollUntil = performance.now() + 180 }
       root.addEventListener("pointermove", onMove); root.addEventListener("pointerleave", onLeave)
       root.addEventListener("pointerdown", onDown); root.addEventListener("pointerup", onUp); root.addEventListener("pointercancel", onUp)
@@ -215,11 +254,12 @@ export default function DexteriaBall({
         root.removeEventListener("pointermove", onMove); root.removeEventListener("pointerleave", onLeave)
         root.removeEventListener("pointerdown", onDown); root.removeEventListener("pointerup", onUp); root.removeEventListener("pointercancel", onUp)
         window.removeEventListener("scroll", onScroll, { capture: true })
+        document.removeEventListener("selectstart", noSelect); docEl.classList.remove("is-turning-ball")
       })
 
       // Spin: one 360-degree turn (--dur-spin, 1.4 s). Ignored while a spin is running.
       let spinStart = -1, spinAngle = 0
-      actions.current.spin = () => { if (reduced || spinStart >= 0) return; spinStart = performance.now() }
+      actions.current.spin = () => { if (reduced || docEl.dataset.calm === "on" || spinStart >= 0) return; spinStart = performance.now() }
       // Squeeze without a pointer: press the middle of the ball for a moment, then let go.
       let squeezeTimer = 0
       actions.current.squeeze = () => {
@@ -230,12 +270,15 @@ export default function DexteriaBall({
       cleanups.push(() => { clearTimeout(squeezeTimer); actions.current.spin = actions.current.squeeze = undefined })
 
       const st = { lx: 0, ly: 0, vx: 0, vy: 0, over: 0 }
-      let T = 0, last = performance.now(), idle = false
+      let T = 0, last = performance.now(), idle = false, still = 0, ready = false
       loop = (now) => {
         if (disposed) return
         if (!visible || document.hidden) { running = false; return }
         raf = requestAnimationFrame(loop)
         const dt = Math.min((now - last) / 1000, 0.05); last = now
+        // Static mode (data-calm="on"): the idle float and sway ease out; dragging still works.
+        still += ((docEl.dataset.calm === "on" || reduced ? 1 : 0) - still) * (1 - Math.exp(-dt * 3))
+        const live = 1 - still
         if (!reduced) T += dt
         const sc = scrolling()
         if (sc && down) down = false
@@ -247,25 +290,42 @@ export default function DexteriaBall({
         const w0 = 7
         st.vx += (w0 * w0 * (tx - st.lx) - 2 * w0 * st.vx) * dt; st.vy += (w0 * w0 * (ty - st.ly) - 2 * w0 * st.vy) * dt
         st.lx += st.vx * dt; st.ly += st.vy * dt
-        const calm = 1 - 0.6 * st.over
+        const calm = (1 - 0.6 * st.over) * live
         const yaw = -16 + 12 * calm * Math.sin((2 * Math.PI * T) / 8) + 28 * st.over * st.lx
         const nod = 5 * calm * Math.sin((2 * Math.PI * T) / 6) - 16 * st.over * st.ly
-        const bob = 0.06 * calm * Math.sin((2 * Math.PI * T) / 4)
+        const bob = floatAmp * calm * Math.sin((2 * Math.PI * T) / 4)
         if (spinStart >= 0) {
           const u = (now - spinStart) / 1400
           if (u >= 1) { spinStart = -1; spinAngle = 0 } else spinAngle = 2 * Math.PI * (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2)
         }
-        group.rotation.y = yaw * D2R + spinAngle + offset.current.ry; group.rotation.x = -nod * D2R + offset.current.rx
+        let dragYaw = 0, dragPitch = 0
+        if (dragRotate) {
+          if (!drag.on) {
+            drag.yaw += drag.vyaw * dt; drag.pitch += drag.vpitch * dt
+            const decay = Math.exp(-dt * 3.2); drag.vyaw *= decay; drag.vpitch *= decay
+            if (Math.abs(drag.vyaw) < 0.25) { // inertia spent: ease back to the resting pose, by the shortest way round
+              const home = Math.round(drag.yaw / (2 * Math.PI)) * 2 * Math.PI, e = 1 - Math.exp(-dt * 0.9)
+              drag.yaw += (home - drag.yaw) * e; drag.pitch -= drag.pitch * e
+            }
+          }
+          dragYaw = drag.yaw; dragPitch = drag.pitch
+        }
+        group.rotation.y = yaw * D2R + spinAngle + dragYaw + offset.current.ry; group.rotation.x = -nod * D2R + dragPitch + offset.current.rx
         group.rotation.z = 0.03 * Math.sin((2 * Math.PI * T) / 9.5) * calm
         const target = down ? 1 : 0, k0 = 18, zt = 0.26, n = 4, hs = dt / n
         for (let i = 0; i < n; i++) { const a = -k0 * k0 * (S - target) - 2 * zt * k0 * Sv; Sv += a * hs; S += Sv * hs }
+        root.dataset.squeeze = S > 0.15 ? "1" : "0"
         const moving = Math.abs(S - target) > 1e-4 || Math.abs(Sv) > 1e-3
         if (moving || !idle) { deform(); idle = !moving }
         group.position.set(0.1 * st.lx * st.over, bob - 0.07 * S, 0)
-        const b = bob / 0.06
-        shadow.style.opacity = String(0.9 - 0.25 * b + 0.15 * S)
-        shadow.style.transform = "translateX(-50%) scale(" + (1 - 0.1 * b + 0.06 * S) + ")"
+        const b = floatAmp ? bob / floatAmp : 0
+        if (shadow) {
+          shadow.style.opacity = String(0.9 - 0.25 * b + 0.15 * S)
+          shadow.style.transform = "translateX(-50%) scale(" + (1 - 0.1 * b + 0.06 * S) + ")"
+        }
+        if (onBob) onBob(b)
         renderer.render(scene, camera)
+        if (!ready) { ready = true; if (onReady) onReady() }
       }
       const start = () => { if (running || disposed) return; running = true; last = performance.now(); raf = requestAnimationFrame(loop) }
       const io = new IntersectionObserver((es) => { visible = es[es.length - 1].isIntersecting; if (visible) start() })
@@ -276,6 +336,7 @@ export default function DexteriaBall({
       start()
     } else {
       renderer.render(scene, camera)
+      if (onReady) onReady()
     }
 
     return () => {
@@ -292,7 +353,7 @@ export default function DexteriaBall({
       renderer.dispose()
       if (cvs.parentNode) cvs.parentNode.removeChild(cvs)
     }
-  }, [enabled, interactive, pauseOnScroll, logo, color, logoSpan, engrave, btnKey, fallbackSrc])
+  }, [enabled, interactive, pauseOnScroll, logo, color, logoSpan, engrave, btnKey, logoKey, fallbackSrc, showShadow, floatAmp, maxPixelRatio, dragRotate])
 
   return (
     <div
@@ -305,13 +366,13 @@ export default function DexteriaBall({
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <div
+      {showShadow && <div
         ref={shadowRef}
         style={{
           position: "absolute", left: "50%", top: 0, borderRadius: "50%", pointerEvents: "none", filter: "blur(5px)",
           background: "radial-gradient(ellipse at center, rgba(70,66,50,.42), rgba(70,66,50,0) 70%)",
         }}
-      />
+      />}
       {/* The ball's own disc is the only part that takes the pointer (when pointer events are on) */}
       <div
         ref={hitRef}

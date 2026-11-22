@@ -1,0 +1,86 @@
+/* Raika 03: the problem (gaps): rules used only by this section. */
+@layer sections {
+  .dx-hs__eyebrow{ margin: 0 0 10px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dx-amber); }
+
+  .dx-hs__title{ margin: 0; font-size: clamp(28px, 3.4vw, 48px); letter-spacing: -.03em; line-height: 1.05; font-weight: 600; }
+
+  /* ---------- stacking problem cards ---------- */
+  .dx-stack{ margin-top: clamp(56px, 7vw, 96px); }
+
+  .dx-stack__head{ margin-bottom: clamp(24px, 3vw, 40px); }
+
+  .dx-stack__list{ list-style: none; margin: 0; padding: 0; }
+
+  .dx-stack__item{ position: sticky; top: calc(12vh + var(--n) * 28px); padding-bottom: 7vh; }
+
+  .dx-stack__item:last-child{ padding-bottom: 0; }
+
+  .dx-stack__card{
+    position: relative; overflow: hidden; transform-origin: 50% 0; will-change: transform;
+    min-height: min(460px, 64vh); border-radius: 36px; padding: clamp(28px, 4vw, 56px);
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(20px, 3vw, 48px); align-items: stretch;
+    background: var(--dx-card); border: 1px solid var(--dx-line); box-shadow: 0 -18px 50px -28px rgba(28,40,30,.45);
+  }
+
+  .dx-stack__card--ink{ background: var(--dx-ink); border-color: var(--dx-ink); color: var(--dx-on-dark); }
+
+  .dx-stack__card--amber{ background: #F6E8D6; border-color: #EEDBC2; }
+
+  .dx-stack__card--sage{ background: #DDE3D6; border-color: #CFD7C7; }
+
+  .dx-stack__text{ display: flex; flex-direction: column; min-width: 0; }
+
+  .dx-stack__top{ display: flex; align-items: center; gap: 12px; }
+
+  .dx-stack__n{ display: inline-grid; place-items: center; min-width: 52px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1.5px solid currentColor; font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
+
+  .dx-stack__tag{ font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dx-amber); }
+
+  .dx-stack__card--ink .dx-stack__tag{ color: #E3B985; }
+
+  .dx-stack__t{ margin: auto 0 14px; padding-top: 32px; font-size: clamp(32px, 4.2vw, 60px); letter-spacing: -.035em; line-height: 1.02; max-width: 13ch; }
+
+  .dx-stack__p{ margin: 0; font-size: clamp(16px, 1.35vw, 20px); line-height: 1.55; color: var(--dx-muted); max-width: 36ch; }
+
+  .dx-stack__card--ink .dx-stack__p{ color: var(--dx-on-dark-muted); }
+
+  .dx-stack__art{ position: relative; display: grid; place-items: center; border-radius: 28px; background: rgba(28,40,30,.05); overflow: hidden; }
+
+  .dx-stack__card--ink .dx-stack__art{ background: rgba(240,236,227,.05); }
+
+  .dx-stack__art::before, .dx-stack__art::after{ content: ""; position: absolute; border-radius: 50%; border: 1.5px dashed rgba(28,40,30,.14); }
+
+  .dx-stack__art::before{ width: 70%; aspect-ratio: 1; }
+
+  .dx-stack__art::after{ width: 100%; aspect-ratio: 1; border-style: solid; border-color: rgba(28,40,30,.07); }
+
+  .dx-stack__card--ink .dx-stack__art::before{ border-color: rgba(240,236,227,.18); }
+
+  .dx-stack__card--ink .dx-stack__art::after{ border-color: rgba(240,236,227,.08); }
+
+  .dx-stack__icon{ position: relative; z-index: 1; width: clamp(110px, 12vw, 160px); aspect-ratio: 1; border-radius: 36%; display: grid; place-items: center; background: #F6E8D6; box-shadow: 0 20px 40px -20px rgba(28,40,30,.5); }
+
+  .dx-stack__card--amber .dx-stack__icon{ background: #EFD6B6; }
+
+  .dx-stack__card--ink .dx-stack__icon{ background: #E3B985; }
+
+  .dx-stack__card--sage .dx-stack__icon{ background: var(--dx-ink); }
+
+  .dx-stack__icon svg{ width: 46%; height: 46%; fill: none; stroke: #8A5520; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .dx-stack__card--ink .dx-stack__icon svg{ stroke: var(--dx-ink); }
+
+  .dx-stack__card--sage .dx-stack__icon svg{ stroke: #E3B985; }
+
+
+
+
+
+
+  @media (max-width: 767px){
+    .dx-stack__item{ top: calc(8vh + var(--n) * 16px); padding-bottom: 5vh; }
+    .dx-stack__card{ grid-template-columns: 1fr; min-height: 0; border-radius: 28px; }
+    .dx-stack__art{ order: -1; min-height: 150px; }
+    .dx-stack__t{ padding-top: 18px; }
+  }
+}

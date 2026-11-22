@@ -1,80 +1,256 @@
-# Dexteria landing page: Smart Ball
+# Dexteria Smart Ball landing page
 
-Single-product landing page for the Dexteria Smart Ball, a squeezable ball with sealed electronics that measures grip pressure and movement for home hand practice.
-Team CS-06, University of Westminster Agile Team Project, Coursework 1, 2026/27.
+## Project overview
+The marketing landing page for the **Dexteria Smart Ball**, built by team **CS-06** for the University of Westminster Agile Team Project (ATP), Coursework 1, 2026/27. Dexteria is a home hand-practice kit; this site covers the Smart Ball only. All copy is wellness wording: the product supports physiotherapy and does not replace it, and it makes no diagnostic or treatment claims.
 
-Built with React and [Vite](https://vite.dev). Each section is its own folder with its JSX, CSS, JS and README. `src/pages/Home.jsx` assembles them in order. The hero ball is `src/components/DexteriaBall/` (Three.js r128, pinned to `three@0.128.0`, moved on scroll by `ScrollBall.jsx` using `motion`). The old Eleventy source is kept in `legacy-eleventy/` and can be deleted.
+The page runs in this order: hero, problem (stats, a week at home, what goes wrong), why home hand rehabilitation matters, how Dexteria helps (the interactive Smart Ball demo), progress at a glance, features (a scroll-driven ball walkthrough), one app three ways, team, waitlist, contact, footer. A moving word strip repeats after the hero, before the Smart Ball explanation and at the end of the page.
+
+## Tech stack
+- React 19.3.1 and React DOM 19.3.1
+- Vite ^8.3.8 with @vitejs/plugin-react ^6.3.0
+- Three.js 0.128.0 (the 3D ball)
+- Anime.js 4.5.0 (scroll progress line and scroll effects)
+- Plain CSS with cascade layers (`src/css/layers.css`) and design tokens (`src/css/tokens.css`)
+
+Versions are read from `package.json`.
+
+## Dependencies
+| Package | Version | Used for |
+|---|---|---|
+| `animejs` | `4.5.0` | Anime.js: the scroll progress line (`onScroll`), and the scroll effects in `src/motion/effects/`. |
+| `react` | `19.3.1` | React: every page and section is a component. |
+| `react-dom` | `19.3.1` | React DOM: mounts the pages (`src/mount.jsx`). |
+| `three` | `0.128.0` | Three.js (pinned to r128): the 3D Smart Ball in the hero and the waitlist (`src/components/DexteriaBall/`). Newer versions change the ball's lighting and engraving. |
+
+Dev dependencies:
+
+| Package | Version | Used for |
+|---|---|---|
+| `@vitejs/plugin-react` | `^6.3.0` | Vite plugin for React (JSX). |
+| `vite` | `^8.3.8` | Vite: dev server and production build (multi-page: home, privacy, accessibility, 404). |
 
 ## Commands
-
 ```bash
 npm install
-npm run dev      # local server with hot reload
-npm run build    # builds to dist/
-npm run preview  # serves dist/
+npm run dev       # Vite dev server
+npm run build     # production build into dist/
+npm run preview   # serve the build
 ```
 
-**Deploy (Cloudflare Pages):** build command `npm run build`, output directory `dist`.
+## Important modules
+- **3D Smart Ball** (`src/components/DexteriaBall/`). A Three.js ball, used in the hero (`src/sections/01-hero/`) and the waitlist (`src/sections/11-waitlist/`) only. A press squeezes it, a drag turns it, the pointer leans it, and it floats slowly. Rendering pauses off screen. Low-end devices and browsers without WebGL get a still image (`public/assets/ball/smart-ball-still.webp`). The logo engraving is a base64 height map in `dexteriaLogoMaps.js`, built from `public/assets/images/logo/logo-removebg-preview.png`. Lines changed in the ball code for the brand colours and the new logo are marked `// CHANGED:` so they can be reverted. See `src/components/DexteriaBall/README.md`.
+- **Scroll progress line** (`src/motion/scroll-indicator.js`). A thin line in the bottom-right corner that fills as you scroll, built with Anime.js `onScroll` in `sync` mode, so it follows the scroll position with no transition of its own and works the same under reduced motion.
+- **Navigation** (`src/sections/00-nav/`). Floating pill: logo, section links (Problem, About, How It Helps, Features, Team, Contact Us), the **Static | Motion** control and the **Join the waitlist** button. Below 1080px the links move into a **Menu** disclosure (Escape closes it and returns focus). The logo jumps instantly to the top of the page (`logo-to-top.js`).
+- **Static | Motion control** (`src/motion/motion-controller.js`). One switch for motion on the site. Static stops the ball float, drift and animations. It defaults to Static when the system asks for reduced motion and is remembered in `localStorage`.
+- **Word strip** (`src/components/WordStrip/`). One component, used three times in `src/pages/Home.jsx`.
+- **Scroll effects** (`src/motion/effects/`). Reveal on scroll, count-ups and the pinned steps, started from `src/js/main.js`.
+- **Colours**. Buttons `#b7bab8` (dark green text on them, 7.66:1), ball `#808475`, logo `#636559`; see `src/css/tokens.css`.
 
-`npm test` (`tests/check.mjs`) still targets the old Eleventy output and its ball states, and needs updating before use.
+## Project structure
+Generated from the file system.
 
-## Structure
-
+```text
+dexteria-site/
+|-- accessibility/
+|   `-- index.html
+|-- privacy/
+|   `-- index.html
+|-- public/
+|   |-- assets/
+|   |   |-- ball/
+|   |   |   |-- smart-ball-still.webp
+|   |   |   `-- smart-ball.png
+|   |   `-- images/
+|   |       |-- app/
+|   |       |   |-- app-progress.svg
+|   |       |   |-- app-session-summary.svg
+|   |       |   |-- app-squeeze-game.svg
+|   |       |   `-- app-tilt-game.svg
+|   |       |-- features/
+|   |       |   |-- clinician.svg
+|   |       |   |-- games.svg
+|   |       |   |-- grip-number.svg
+|   |       |   |-- hand-compare.svg
+|   |       |   `-- offline.svg
+|   |       |-- logo/
+|   |       |   |-- logo-mark.png
+|   |       |   |-- logo-removebg-preview.png
+|   |       |   `-- logo-text.png
+|   |       |-- problem-solution/
+|   |       |   |-- caregiver.png
+|   |       |   |-- clinician.png
+|   |       |   `-- patient.png
+|   |       `-- team/
+|   |           `-- avatar-placeholder.svg
+|   |-- dexteria/
+|   |   `-- v51/
+|   |       |-- d/   (133 .webp files)
+|   |       `-- m/   (133 .webp files)
+|   |-- fonts/
+|   |   |-- archivo-ext.woff2
+|   |   `-- archivo-latin.woff2
+|   |-- team/
+|   |   |-- placeholder.webp
+|   |   |-- raiqa.webp
+|   |   |-- safiya.webp
+|   |   |-- sima.webp
+|   |   |-- vinuri.webp
+|   |   `-- zaina.webp
+|   |-- apple-touch-icon.png
+|   |-- favicon.ico
+|   |-- icon-192.png
+|   |-- robots.txt
+|   `-- social-preview.png
+|-- src/
+|   |-- components/
+|   |   |-- DexteriaBall/
+|   |   |   |-- can-run-3d.js
+|   |   |   |-- DexteriaBall.jsx
+|   |   |   |-- dexteriaLogoMaps.js
+|   |   |   `-- README.md
+|   |   |-- WordStrip/
+|   |   |   |-- word-strip.css
+|   |   |   `-- WordStrip.jsx
+|   |   `-- Layout.jsx
+|   |-- css/
+|   |   |-- base.css
+|   |   |-- layers.css
+|   |   |-- pages.css
+|   |   `-- tokens.css
+|   |-- entries/
+|   |   |-- accessibility.jsx
+|   |   |-- home.jsx
+|   |   |-- not-found.jsx
+|   |   `-- privacy.jsx
+|   |-- js/
+|   |   `-- main.js
+|   |-- motion/
+|   |   |-- effects/
+|   |   |   |-- hover-lift.js
+|   |   |   |-- index.js
+|   |   |   |-- marquee.js
+|   |   |   |-- pinned-features.js
+|   |   |   |-- pinned-steps.js
+|   |   |   `-- reveal.js
+|   |   |-- ball-visibility.js
+|   |   |-- effects.css
+|   |   |-- motion-controller.js
+|   |   |-- README.md
+|   |   `-- scroll-indicator.js
+|   |-- pages/
+|   |   |-- Accessibility.jsx
+|   |   |-- Home.jsx
+|   |   |-- NotFound.jsx
+|   |   `-- Privacy.jsx
+|   |-- sections/
+|   |   |-- 00-nav/
+|   |   |   |-- logo-to-top.js
+|   |   |   |-- nav.css
+|   |   |   |-- nav.js
+|   |   |   |-- Nav.jsx
+|   |   |   `-- README.md
+|   |   |-- 01-hero/
+|   |   |   |-- hero.css
+|   |   |   |-- Hero.jsx
+|   |   |   `-- README.md
+|   |   |-- 02-problem/
+|   |   |   |-- problem-stats.css
+|   |   |   |-- problem-stats.js
+|   |   |   |-- ProblemStats.jsx
+|   |   |   `-- README.md
+|   |   |-- 03-week-at-home/
+|   |   |   |-- problem-week.css
+|   |   |   |-- problem-week.js
+|   |   |   |-- ProblemWeek.jsx
+|   |   |   `-- README.md
+|   |   |-- 04-what-goes-wrong/
+|   |   |   |-- problem-gaps.css
+|   |   |   |-- problem-gaps.js
+|   |   |   |-- ProblemGaps.jsx
+|   |   |   `-- README.md
+|   |   |-- 05-why-it-matters/
+|   |   |   |-- impact.css
+|   |   |   |-- Impact.jsx
+|   |   |   `-- README.md
+|   |   |-- 06-how-dexteria-helps/
+|   |   |   |-- README.md
+|   |   |   |-- solution-demo.css
+|   |   |   |-- solution-demo.js
+|   |   |   `-- SolutionDemo.jsx
+|   |   |-- 07-progress/
+|   |   |   |-- progress.css
+|   |   |   |-- Progress.jsx
+|   |   |   `-- README.md
+|   |   |-- 08-features/
+|   |   |   |-- anchors.js
+|   |   |   |-- archivo.css
+|   |   |   |-- Features.jsx
+|   |   |   `-- features.module.css
+|   |   |-- 09-app-three-ways/
+|   |   |   |-- README.md
+|   |   |   |-- solution-modes.css
+|   |   |   |-- solution-modes.js
+|   |   |   `-- SolutionModes.jsx
+|   |   |-- 10-team/
+|   |   |   |-- Team.jsx
+|   |   |   `-- team.module.css
+|   |   |-- 11-waitlist/
+|   |   |   |-- README.md
+|   |   |   |-- waitlist.css
+|   |   |   |-- waitlist.js
+|   |   |   `-- Waitlist.jsx
+|   |   |-- 12-contact/
+|   |   |   |-- contact.css
+|   |   |   |-- Contact.jsx
+|   |   |   `-- README.md
+|   |   |-- 13-footer/
+|   |   |   |-- footer.css
+|   |   |   |-- Footer.jsx
+|   |   |   `-- README.md
+|   |   |-- _hidden-team-version/
+|   |   |   |-- app-preview/
+|   |   |   |   |-- app-preview.css
+|   |   |   |   |-- AppPreview.jsx
+|   |   |   |   `-- README.md
+|   |   |   |-- banner/
+|   |   |   |   |-- banner.css
+|   |   |   |   |-- Banner.jsx
+|   |   |   |   `-- README.md
+|   |   |   |-- how-it-works/
+|   |   |   |   |-- how-it-works.css
+|   |   |   |   |-- HowItWorks.jsx
+|   |   |   |   `-- README.md
+|   |   |   |-- key-features/
+|   |   |   |   |-- key-features.css
+|   |   |   |   |-- KeyFeatures.jsx
+|   |   |   |   `-- README.md
+|   |   |   |-- marquee/
+|   |   |   |   |-- marquee.css
+|   |   |   |   |-- Marquee.jsx
+|   |   |   |   `-- README.md
+|   |   |   `-- team/
+|   |   |       |-- README.md
+|   |   |       |-- team.css
+|   |   |       `-- Team.jsx
+|   |   |-- dx-shared/
+|   |   |   |-- dx-shared.css
+|   |   |   |-- dx-shared.js
+|   |   |   `-- README.md
+|   |   `-- vn-shared/
+|   |       |-- README.md
+|   |       |-- vn-shared.css
+|   |       `-- vn-shared.jsx
+|   `-- mount.jsx
+|-- .gitignore
+|-- .npmrc
+|-- 404.html
+|-- AGENTS.md
+|-- index.html
+|-- package-lock.json
+|-- package.json
+|-- README.md
+`-- vite.config.js
 ```
-index.njk                  assembles sections in order, nothing else
-privacy.njk                full privacy notice           → /privacy/
-accessibility.njk          accessibility statement       → /accessibility/
-404.njk, sitemap.njk
-eleventy.config.js
-src/
-  _includes/base.njk       head, meta, favicon, skip link, footer shell
-  _data/site.json          title, description, URL, contact email, team, year
-  css/tokens.css           colours, type scale, spacing, motion durations
-  css/base.css             reset, typography, buttons, focus, reduced motion
-  css/pages.css            long-form text pages
-  js/main.js               boots the page, wires modules together
-  js/scroll-controller.js  maps scroll position to ball states
-  js/reduced-motion.js     reads the preference once, exposes one flag
-  js/reveal.js             fade-in on scroll (skipped under reduced motion)
-  components/smart-ball/   the ball (see its README for the 3D swap)
-  sections/01-nav … 12-footer
-  assets/images, assets/ball
-public/                    favicon, icons, social preview, robots.txt
-tests/check.mjs
-```
 
-**How CSS is loaded:** each section starts with `{% css %}…{% endcss %}`. Eleventy gathers every section's CSS into one hashed file in `_site/bundle/`. Cascade layers (`tokens, base, component, sections, page`, declared in `base.njk`) keep the order predictable.
-
-**How the ball works:** every section root has `data-ball-state="…"`. The section that crosses the middle of the viewport sets the state. If an element has `data-ball-anchor="<state>"`, the ball centres on it and follows it. Otherwise it uses the pose in `smart-ball.css`.
-
-| Section | Ball state |
-| --- | --- |
-| Hero | `hero`: large, centred, idle float, spins on load and on "Spin the ball" |
-| Marquee | `side` |
-| Problem | `behind-panel`: the panel slides over it |
-| Banner | `banner`: rises from behind the strip |
-| How It Works | `steps`: moves between three positions |
-| Key Features | `corner` |
-| App Preview | `paused` |
-| Team | `off-screen` |
-| Waitlist | `waitlist`: expands from the corner, spins once |
-| Contact, Footer | `rest` |
-
-## Accessibility summary
-
-Checked with `npm test` at 320, 768 and 1440 px, with and without reduced motion, on every page. Results: 0 axe violations (WCAG 2.2 A/AA and best practice), no horizontal scrolling (also with 200% text at 320 and 640 px), one h1, no skipped headings, keyboard tab order (skip link first, every stop visible, ringed and clear of the nav), buttons of 44 px or more, mobile menu Escape and focus return, form errors and status messages, Pause motion, and reduced motion. Text colours and contrast ratios are listed in `src/css/tokens.css`.
-
-Still to test by hand: a real screen reader (NVDA or VoiceOver), iOS Safari and Low Power Mode, and a Lighthouse run once the real images are in.
-
-## Placeholder assets still needed
-
-| Asset | Where | Notes |
-| --- | --- | --- |
-| Smart Ball 3D model (`.glb`) | `src/assets/ball/` | Under 3 MB. Current PNG (179 KB) works until then. See the component README. |
-| Better ball PNG (optional) | `src/assets/ball/smart-ball.png` | Transparent, about 1000 px square, under 300 KB. The current one is 550 px and its shadow is baked in, so it shows when the ball spins. |
-| Licensed problem-section photo | `src/assets/images/problem/` | Older adult or hand rehabilitation at home. Record the licence. Update the alt text. |
-| Prototype app screenshots ×4 | `src/assets/images/app/` | 1:2 portrait. Update the alt text with what each shows. |
-| Game and graph pictures ×5 | `src/assets/images/features/` | 4:3. The alt text must keep the data shown. |
-| Team photos, names, roles | `src/assets/images/team/`, `09-team/team.njk` | 400×400. Get consent from each person. |
-| Social preview image | `public/social-preview.png` | 1200×630. A draft made from the ball and logo is in place; replace it with a designed version if you have one. |
-| Contact email | `src/_data/site.json` | Currently `hello@example.com`. |
+## Sections still to be added
+_Space for sections to be added later (for example: testing notes, deployment, licences, change log)._

@@ -1,4 +1,5 @@
-// Calm mode: the single switch for motion on the site.
+// Motion mode (Static | Motion in the nav): the single control for motion on the site.
+// "Static" is Calm mode: data-calm="on".
 //
 // Calm  = the ball jumps to its final pose, every effect shows its final state,
 //         nothing loops, nothing waits to appear.
@@ -51,12 +52,20 @@ export const motion = {
   },
 };
 
-/** Wires every [data-calm-toggle] switch (role="switch") to the controller. */
+/**
+ * Wires every [data-motion-mode] group: two buttons, data-motion-option="on" (Static) and "off" (Motion).
+ * The selected one has aria-pressed="true". Static is the same state as Calm mode (data-calm="on").
+ */
 export function initCalmToggle(scope = document) {
-  scope.querySelectorAll("[data-calm-toggle]").forEach((button) => {
-    const sync = () => button.setAttribute("aria-checked", String(motion.calm));
+  scope.querySelectorAll("[data-motion-mode]").forEach((group) => {
+    const options = [...group.querySelectorAll("[data-motion-option]")];
+    const sync = () => {
+      options.forEach((button) => {
+        button.setAttribute("aria-pressed", String((button.dataset.motionOption === "on") === motion.calm));
+      });
+    };
+    options.forEach((button) => button.addEventListener("click", () => motion.set(button.dataset.motionOption === "on")));
     sync();
-    button.addEventListener("click", () => motion.toggle());
     motion.subscribe(sync);
   });
 }

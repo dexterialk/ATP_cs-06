@@ -1,5 +1,0 @@
-# Partials are included, never built as pages.
-src/sections/
-src/components/
-tests/
-**/README.md

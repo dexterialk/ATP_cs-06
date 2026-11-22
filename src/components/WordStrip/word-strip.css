@@ -1,0 +1,37 @@
+@layer sections {
+/* Moving word strip (from the teammate's solution notes). Dark text on the cream page.
+   The track moves with a CSS animation only (not tied to scrolling). It stops in Static mode (base.css),
+   under prefers-reduced-motion, and while hovered or focused. */
+
+.word-strip {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-block: clamp(18px, 2.4vw, 30px);
+  border-block: 1px solid var(--line);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.word-strip__track { display: flex; width: max-content; animation: word-strip 32s linear infinite; }
+.word-strip:hover .word-strip__track,
+.word-strip:focus-within .word-strip__track { animation-play-state: paused; }
+.word-strip__group { display: flex; align-items: center; flex: none; }
+.word-strip__item { display: flex; align-items: center; }
+.word-strip__word {
+  padding: 0 clamp(20px, 2.6vw, 40px);
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6.4vw, 96px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--green);
+}
+/* Outline words: filled with the page colour and stroked, so the font's inner contours do not show. */
+.word-strip__word--outline { color: var(--cream); -webkit-text-stroke: 3px var(--sage-text); paint-order: stroke fill; }
+.word-strip__dot { width: clamp(10px, 1vw, 14px); height: clamp(10px, 1vw, 14px); border-radius: 50%; background: var(--sage); flex: none; }
+
+@keyframes word-strip { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .word-strip__track { animation: none; } }
+
+}

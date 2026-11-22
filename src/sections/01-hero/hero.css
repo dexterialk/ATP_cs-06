@@ -1,0 +1,231 @@
+@layer sections {
+/* 02 Hero. Dark green at the top melting into the cream page below.
+   Layers: gradient, then the two headline lines with the ball between them (never overlapping either), then text and button.
+   The ground shadow is its own element and is only ever drawn here.
+   Text contrast (all on the dark part of the gradient, which is never lighter than --green-hover
+   behind any text): cream 9.6:1, accent #a5b3a0 5.6:1, muted paragraph #c2c9be 6.1:1 or better. */
+
+.hero {
+  --ball-d: clamp(230px, min(42svh, 70vw), 760px); /* ball diameter: half the screen height, 70% of the width on phones */
+  --ball-gap: calc(var(--ball-d) * 0.06); /* clear space above and below the ball: room for the float, so the ball never touches the words */
+  --r1: 9.75;            /* width of line 1 in ems; used to make it span the screen (measured, see README) */
+  --r2: 11.09;           /* width of line 2 in ems */
+  --n1: 1;               /* number of lines line 1 wraps to */
+  --lh: 0.84;
+  --focus: var(--cream);
+  --focus-halo: var(--green);
+
+  position: relative;
+  overflow: clip;
+  min-height: 100svh;
+  padding: var(--nav-offset) 0 clamp(110px, 15svh, 170px);
+  background: var(--cream); /* seen only if the gradient layer fails */
+  color: var(--on-green);
+}
+
+/* ---- Background: deep green to cream, brand colours only ---- */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--green) 0%,
+    var(--green) 40%,
+    #223226 62%,        /* between --green and --green-hover, keeps text contrast */
+    var(--green-hover) 82%,
+    var(--green-line) 89%,
+    var(--sage) 94.5%,
+    var(--cream) 100%
+  );
+}
+/* A soft sage glow behind the ball; drifts very slowly (transform only). */
+.hero__glow {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: min(1100px, 130vw);
+  aspect-ratio: 1.3;
+  margin: calc(min(1100px, 130vw) / -2.6) 0 0 calc(min(1100px, 130vw) / -2);
+  background: radial-gradient(closest-side, rgb(135 149 133 / 0.42), rgb(135 149 133 / 0.12) 55%, transparent);
+  animation: hero-glow 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.hero[data-visible="false"] .hero__glow { animation-play-state: paused; }
+@keyframes hero-glow {
+  from { transform: translate3d(-3%, 0, 0) scale(1); }
+  to   { transform: translate3d(3%, -4%, 0) scale(1.07); }
+}
+
+/* ---- Stage: the width the oversized type is fitted to ---- */
+.hero__stage {
+  position: relative;
+  container-type: inline-size;
+  width: min(100% - 2 * clamp(12px, 2.4vw, 40px), 2200px);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  --fs1: calc(93cqw / var(--r1));
+  --fs2: calc(98cqw / var(--r2));
+}
+
+/* ---- Headline lockup ---- */
+.hero__title {
+  display: block;
+  width: 100%;
+  font-family: var(--font-archivo, "Archivo"), var(--font-display); /* the heavy Archivo already used in Features and Team */
+  font-weight: 900;
+  font-stretch: 100%;
+  line-height: var(--lh);
+  letter-spacing: -0.035em;
+  text-transform: none;
+  text-wrap: nowrap;
+  text-wrap-style: auto;
+}
+.hero__line { position: relative; display: block; white-space: nowrap; }
+.hero__line--1 {
+  z-index: 1;
+  font-size: var(--fs1);
+  color: var(--on-green);
+}
+.hero__line--2 {
+  z-index: 3;
+  font-size: var(--fs2);
+  color: var(--on-green-label); /* the brand's accent green for dark surfaces */
+  /* clear the ball: the ball box is out of flow, so reserve its height here */
+  margin-top: calc(var(--ball-d) + 2 * var(--ball-gap) - 0.1 * var(--fs2));
+  padding-bottom: 0.1em;
+}
+
+/* ---- Ball ---- */
+.hero__ball {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: calc(var(--fs1) * var(--lh) * var(--n1) + var(--ball-gap));
+  width: var(--ball-d);
+  height: var(--ball-d);
+  margin: 0;
+  transform: translateX(-50%);
+  pointer-events: none; /* only the ball's own disc and the spin button take the pointer */
+}
+/* The 3D canvas is 1.5x as wide as it is tall, and the ball fills 71.6% of its height. */
+.hero__canvas {
+  --canvas-h: calc(var(--ball-d) / 0.716);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--canvas-h) * 1.5);
+  height: var(--canvas-h);
+  transform: translate(-50%, -50%);
+}
+.hero__still {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--ball-d) / 0.716 * 1.5);
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%);
+  animation: hero-float 4s ease-in-out infinite;
+  transition: opacity 0.5s;
+}
+.hero__still.is-hidden { opacity: 0; }
+
+/* Spin: small icon-only button at the lower right of the ball, faint until hovered or focused. */
+.hero__spin {
+  --size: 40px;
+  position: absolute;
+  left: 86%;
+  top: 86%;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border: 1px solid rgb(240 236 227 / 0.7);
+  border-radius: 50%;
+  background: rgb(28 42 32 / 0.55);
+  color: var(--cream);
+  opacity: 0.6;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  touch-action: manipulation;
+  transition: opacity var(--dur-fast), background-color var(--dur-fast), transform var(--dur-fast) var(--ease);
+}
+.hero__spin::before { /* a 48px hit area around the 40px circle */
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+}
+.hero__spin svg { width: 18px; height: 18px; transition: transform var(--dur) var(--ease); }
+.hero__spin:hover,
+.hero__spin:focus-visible { opacity: 1; background: var(--green); }
+.hero__spin:hover svg { transform: rotate(-90deg); }
+.hero__spin:active { transform: translate(-50%, -50%) scale(0.94); }
+@media (pointer: coarse) { .hero__spin { --size: 44px; opacity: 0.8; } }
+
+/* ---- Supporting copy and button ---- */
+.hero__description {
+  position: relative;
+  z-index: 3;
+  max-width: 60ch;
+  margin: clamp(0.9rem, 1.6svh, 1.5rem) auto 0;
+  color: var(--on-green-muted);
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  line-height: 1.7;
+}
+.hero__actions {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(1.1rem, 2.4svh, 1.75rem);
+}
+
+/* ---- Ground shadow: hero only, fades with scroll (opacity and transform only) ---- */
+.hero__shadow {
+  --p: 0;     /* scroll progress, 0 to 1, written by Hero.jsx */
+  --bob: 0;   /* ball height, -1 to 1, written by Hero.jsx */
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: clamp(16px, 4svh, 44px);
+  width: calc(var(--ball-d) * 1.05);
+  height: calc(var(--ball-d) * 0.13);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(28 42 32 / 0.5), rgb(28 42 32 / 0.18) 55%, transparent);
+  filter: blur(6px);
+  opacity: calc((0.95 - 0.2 * var(--bob)) * (1 - var(--p)));
+  transform: translateX(-50%) scale(calc(1 - 0.1 * var(--bob)));
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+@keyframes hero-float { 0%, 100% { transform: translate(-50%, calc(-50% + 8px)); } 50% { transform: translate(-50%, calc(-50% - 12px)); } }
+
+/* ---- Phones: the type wraps to two words per line and grows ---- */
+@media (max-width: 599px) {
+  .hero { --r1: 6.5; --r2: 5.85; --n1: 2; }
+  .hero__stage { --fs1: calc(88cqw / var(--r1)); --fs2: calc(94cqw / var(--r2)); }
+  .hero__line { white-space: normal; }
+  .hero__line--1 { max-width: 7em; margin-inline: auto; }
+  .hero__line--2 { max-width: 6.6em; margin-inline: auto; }
+  .hero__description { font-size: 1rem; }
+}
+
+/* While the ball is being dragged, nothing on the page should get selected. */
+.is-turning-ball, .is-turning-ball * { -webkit-user-select: none !important; user-select: none !important; }
+
+/* Static mode (data-calm="on"): no float, no drift, no entrance. base.css already cancels animation
+   and transitions; this just makes sure the still image rests in the middle and the spin button, which
+   has nothing to do while the ball is still, is not offered. */
+:root[data-calm="on"] .hero__spin { display: none; }
+
+@media (forced-colors: active) {
+  .hero__spin { border-color: ButtonText; background: ButtonFace; color: ButtonText; opacity: 1; }
+}
+
+}

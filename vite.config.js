@@ -6,6 +6,9 @@ import { resolve } from "node:path";
 export default defineConfig({
   plugins: [react()],
   build: {
+    // Three.js r128 alone is about 600 kB minified. It is loaded only when the ball is switched on
+    // (see src/motion/ball-visibility.js), so the size warning is raised above it on purpose.
+    chunkSizeWarningLimit: 900,
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, "index.html"),

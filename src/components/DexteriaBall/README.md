@@ -130,7 +130,13 @@ All props are optional.
 | `color` | `#8C9986` | Ball colour |
 | `background` | `#EDEAE2` | Cream by default; `"transparent"` lets your page show through |
 | `hint` | `"Press and hold to squeeze"` | Hint text; `""` hides it |
-| `logoSpan` | `1.25` | Logo size (smaller number = bigger logo) |
+| `logoSpan` | `1.25` | Size of the area the logo map covers, in ball radii (smaller number = smaller logo; the older note had this the wrong way round) |
+| `logoOffset` | `[0, 0]` | Moves the logo on the ball (x right, y up, in ball radii) |
+| `shadow` | `true` | `false` removes the built-in ground shadow (the hero draws its own) |
+| `dragRotate` | `false` | A press squeezes; dragging more than a few pixels turns the ball instead |
+| `floatAmp` | `0.06` | Height of the slow float, in ball radii |
+| `maxPixelRatio` | `2` | Cap on render resolution |
+| `onBob`, `onReady` | none | Callbacks: float position each frame; first frame drawn |
 | `engrave` | `1.0` | Engraving depth |
 | `buttonDir` | `[0.78, 0.4, 0.48]` | Position of the side button on the ball |
 | `className`, `style` | none | Pass through to the outer container |

@@ -1,0 +1,107 @@
+/* Raika 02: the problem (a week of hours): rules used only by this section. */
+@layer sections {
+  /* week of hours */
+  .dx-week{
+    margin: clamp(56px, 7vw, 96px) 0 0; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 64px); align-items: center;
+  }
+
+  .dx-dot{
+    aspect-ratio: 1; border-radius: 50%; border: 1.5px solid #B9C0B3; background: transparent;
+    transform: scale(.2); opacity: 0;
+    transition: transform .5s cubic-bezier(.3,1.6,.5,1), opacity .4s ease;
+    transition-delay: calc(var(--i) * 6ms);
+  }
+
+  .dx-week.is-in .dx-dot{ transform: scale(1); opacity: 1; }
+
+  .dx-dot--clinic{ background: var(--dx-ink); border-color: var(--dx-ink); }
+
+  .dx-week.is-in .dx-dot--clinic{ animation: dx-pulse 2.4s 1.4s ease-in-out infinite; }
+
+  .dx-week__cap{ display: flex; flex-direction: column; gap: 14px; font-size: 18px; line-height: 1.6; color: var(--dx-muted); }
+
+  .dx-week__big{ font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -.02em; color: var(--dx-ink); line-height: 1.15; }
+
+  /* ---------- week: pop-out version ---------- */
+  .dx-week{
+    background: var(--dx-ink); color: var(--dx-on-dark); border-radius: 32px;
+    padding: clamp(24px, 4vw, 52px); grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    box-shadow: 0 30px 70px -36px rgba(28,40,30,.6); position: relative; overflow: hidden;
+  }
+
+  .dx-week::after{ content: ""; position: absolute; right: -120px; bottom: -160px; width: 420px; height: 420px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(227,185,133,.18), transparent); pointer-events: none; }
+
+  .dx-week__days{ display: grid; gap: 6px; }
+
+  .dx-week__row{ display: grid; grid-template-columns: 40px repeat(24, 1fr); gap: 4px; align-items: center; }
+
+  .dx-week__day{ font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #8E9A8A; }
+
+  .dx-week__hours{ display: grid; grid-template-columns: 40px repeat(24, 1fr); gap: 4px; margin-top: 6px; }
+
+  .dx-week__hours span{ font-size: 10px; color: #8E9A8A; grid-column: span 6; }
+
+  .dx-week__hours span:first-child{ grid-column: 2 / span 6; }
+
+  .dx-week .dx-dot{ border: 0; background: rgba(240,236,227,.14); border-radius: 4px; aspect-ratio: 1 / 1.4; }
+
+  .dx-week .dx-dot--clinic{ background: #E3B985; box-shadow: 0 0 0 0 rgba(227,185,133,.6); }
+
+  .dx-week.is-in .dx-dot--clinic{ animation: dx-glow 2.2s 1.6s ease-in-out infinite; }
+
+  .dx-week__cap{ color: var(--dx-on-dark-muted); position: relative; z-index: 1; }
+
+  .dx-week__big{ color: var(--dx-on-dark); font-size: clamp(30px, 3.4vw, 44px); }
+
+  .dx-week__split{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 6px 0 4px; }
+
+  .dx-week__chip{ border-radius: 20px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+
+  .dx-week__chip b{ font-size: clamp(34px, 3.6vw, 48px); line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+
+  .dx-week__chip small{ font-size: 13px; line-height: 1.35; }
+
+  .dx-week__chip--clinic{ background: #E3B985; color: var(--dx-ink); }
+
+  .dx-week__chip--home{ background: rgba(240,236,227,.08); border: 1px solid rgba(240,236,227,.16); color: var(--dx-on-dark); }
+
+  .dx-week__chip--home small{ color: var(--dx-on-dark-muted); }
+
+  .dx-week__note{ font-size: 16px; line-height: 1.6; margin: 0; }
+
+  @media (max-width: 960px){
+    .dx-week{ grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px){
+    .dx-week__row, .dx-week__hours{ grid-template-columns: 30px repeat(24, 1fr); gap: 2px; }
+    .dx-week__hours span:first-child{ grid-column: 2 / span 6; }
+    .dx-week__day{ font-size: 10px; }
+    .dx-week .dx-dot{ border-radius: 2px; }
+  }
+
+  /* Title and one-line explanation of the heat map, above the switch. */
+  .dx-week__title{ display: block; padding-bottom: 14px; border-bottom: 1px solid rgba(240,236,227,.18); font-size: 15px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dx-on-dark); }
+  .dx-week__title small{ display: block; margin-top: 8px; font-size: 15px; font-weight: 400; letter-spacing: 0; text-transform: none; line-height: 1.55; color: var(--dx-on-dark-muted); }
+
+  /* ---------- with / without Dexteria switch ---------- */
+  .dx-week__toggle{ display: inline-flex; width: max-content; padding: 4px; gap: 4px; border-radius: 999px; background: rgba(240,236,227,.08); border: 1px solid rgba(240,236,227,.14); }
+
+  .dx-week__toggle button{ border: 0; background: transparent; color: var(--dx-on-dark-muted); font: 600 13px var(--font-body, "DM Sans", system-ui, sans-serif); padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: background .25s, color .25s; }
+
+  .dx-week__toggle button[aria-pressed="true"]{ background: var(--dx-on-dark); color: var(--dx-ink); }
+
+  .dx-week__toggle button:focus-visible{ outline: 3px solid #E3B985; outline-offset: 2px; }
+
+  .dx-week .dx-dot{ transition: transform .5s cubic-bezier(.3,1.6,.5,1), opacity .4s ease, background .45s ease, box-shadow .45s ease; }
+
+  .dx-week--with .dx-dot--home{ background: #A9B8A4; box-shadow: 0 0 12px rgba(169,184,164,.55); transition-delay: calc(var(--k) * 45ms); }
+
+  .dx-week__chip--home{ transition: background .4s, color .4s; }
+
+  .dx-week--with .dx-week__chip--home{ background: #A9B8A4; color: var(--dx-ink); border-color: #A9B8A4; }
+
+  .dx-week--with .dx-week__chip--home small{ color: #24392A; }
+}

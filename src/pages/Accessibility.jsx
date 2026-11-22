@@ -7,8 +7,8 @@ export default function Accessibility() {
         </h1>
         <p className="updated">
           Last reviewed:{" "}
-          <time dateTime="2026-11-21">
-            21 November 2026
+          <time dateTime="2026-11-23">
+            23 November 2026
           </time>
         </p>
         <p className="lead">
@@ -25,17 +25,19 @@ export default function Accessibility() {
             Skip straight to the main content with the first link on the page.
           </li>
           <li>
-            Stop the floating shapes, scroll effects and the ball’s movement with the{" "}
-            <strong>
-              Calm mode
-            </strong>
-            {" "}switch at the top of the page. The scrolling slogan also has its own Pause button.
+            Choose <strong>Static</strong> in the <strong>Static | Motion</strong> control at the top of the page to stop the ball’s floating, the background drift and the scroll effects. Your choice is remembered.
           </li>
           <li>
-            Turn on “reduce motion” in your device settings to remove scroll effects. The page then shows everything as a simple, still layout.
+            Turn on “reduce motion” in your device settings and the page starts in Static mode, as a simple, still layout.
           </li>
           <li>
             Zoom text to 200% and use the site on screens as narrow as 320 pixels without scrolling sideways.
+          </li>
+          <li>
+            Spin the Smart Ball in the top section with the keyboard-friendly “Spin the ball” button, and read a text description of every picture.
+          </li>
+          <li>
+            See a clear focus outline on every link, button and form field, and read text that meets WCAG AA colour contrast.
           </li>
         </ul>
         <h2>
@@ -49,7 +51,10 @@ export default function Accessibility() {
         </h2>
         <ul>
           <li>
-            Some pictures are placeholders until the final photos and app screens are ready. Their descriptions explain what each one shows.
+            The hero and waitlist balls can be squeezed and turned by pointer or touch only. A keyboard user can use the “Spin the ball” button, and the games in the Smart Ball section can be played with the Space key.
+          </li>
+          <li>
+            The scroll-driven Smart Ball walkthrough moves as you scroll. Its chapter buttons jump to each part, and the Static control turns the effects off.
           </li>
           <li>
             The animated Smart Ball is decorative. It carries no information that is not also given in text.
@@ -60,8 +65,8 @@ export default function Accessibility() {
         </h2>
         <p>
           If something on this site does not work for you, email{" "}
-          <a href="mailto:hello@example.com">
-            hello@example.com
+          <a href="mailto:dexteria.lk@gmail.com">
+            dexteria.lk@gmail.com
           </a>
           . Tell us the page and what happened, and we will try to fix it.
         </p>

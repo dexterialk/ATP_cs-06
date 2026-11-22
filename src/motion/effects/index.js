@@ -3,8 +3,6 @@
 // Sections never import effect files; they only declare the attribute.
 
 import "../effects.css";
-import headlineRise from "./headline-rise.js";
-import drift from "./drift.js";
 import marquee from "./marquee.js";
 import reveal from "./reveal.js";
 import pinnedSteps from "./pinned-steps.js";
@@ -12,8 +10,6 @@ import pinnedFeatures from "./pinned-features.js";
 import { hoverLift, logoHover } from "./hover-lift.js";
 
 const EFFECTS = {
-  "headline-rise": headlineRise,
-  "drift": drift,
   "marquee": marquee,
   "reveal": reveal,
   "pinned-steps": pinnedSteps,

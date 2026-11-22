@@ -118,15 +118,15 @@ main:focus { outline: none; }
   padding: 0.875rem 1.6875rem;
   border: 0;
   border-radius: var(--radius);
-  background: var(--green);
-  color: var(--cream);
+  background: var(--button);
+  color: var(--green);
   font-size: var(--text-sm);
   font-weight: 600;
   line-height: 1.2;
   text-decoration: none;
   transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast);
 }
-.button:hover { background: var(--green-hover); transform: translateY(-3px); }
+.button:hover { background: var(--button-hover); transform: translateY(-3px); }
 .button:active { transform: translateY(0); }
 .button::after {
   content: "";
@@ -142,8 +142,8 @@ main:focus { outline: none; }
 .button:hover svg { transform: translate(3px, -3px); }
 .button:disabled { cursor: progress; transform: none; }
 
-.button--light { background: var(--cream); color: var(--green); }
-.button--light:hover { background: var(--white); }
+.button--light { background: var(--button); color: var(--green); }
+.button--light:hover { background: var(--button-hover); }
 
 /* Secondary control: previous/next, spin, pause. 44px minimum target. */
 .control {
