@@ -20,9 +20,10 @@ function Group({ hidden }) {
   );
 }
 
-export default function WordStrip() {
+// tone "green" is the original look from the teammate's HTML (dark green band, cream words); "cream" sits on the cream page.
+export default function WordStrip({ tone = "green" }) {
   return (
-    <div className="word-strip" role="marquee" aria-label="Squeeze, hold, steady, progress">
+    <div className={`word-strip word-strip--${tone}`} role="marquee" aria-label="Squeeze, hold, steady, progress">
       <div className="word-strip__track">
         <Group />
         <Group hidden />

@@ -1,16 +1,19 @@
+import { lazy, Suspense } from "react";
 import Nav from "../sections/00-nav/Nav.jsx";
-import Footer from "../sections/13-footer/Footer.jsx";
+import Footer from "../sections/17-footer/Footer.jsx";
+
+// The 3D ball (Three.js) is a large download, so it loads after the page.
+const BallLayer = lazy(() => import("../motion/choreography/BallLayer.jsx"));
 
 // Shared page shell: skip link, nav, main, footer.
-// The 3D ball lives only in the hero and the waitlist sections; there is no fixed, scroll-moving ball layer any more.
+// The fixed Smart Ball layer glides and hovers between sections (it fades out over the hero and the waitlist, which carry their own ball).
 export default function Layout({ children }) {
   return (
     <>
       <a className="skip-link" href="#main">Skip to main content</a>
-      {/* Scroll progress line: decorative, so hidden from assistive tech. Filled by src/motion/scroll-indicator.js. */}
-      <div className="scroll-line" aria-hidden="true">
-        <span className="scroll-line__fill" data-scroll-fill=""></span>
-      </div>
+      <Suspense fallback={null}>
+        <BallLayer />
+      </Suspense>
       <Nav />
       <main id="main" tabIndex={-1}>
         {children}

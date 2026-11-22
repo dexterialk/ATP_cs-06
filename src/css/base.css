@@ -6,6 +6,9 @@
 * { margin: 0; }
 
 html {
+  /* The browser scrollbar is hidden (scrolling by wheel, touch, keys and the page links still works). */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   color-scheme: light;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -13,6 +16,8 @@ html {
   scroll-padding-top: var(--nav-offset);
   -webkit-tap-highlight-color: rgb(135 149 133 / 0.25);
 }
+
+html::-webkit-scrollbar { display: none; }
 
 body {
   min-height: 100vh;

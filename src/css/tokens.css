@@ -65,6 +65,11 @@
   --dur-marquee: 28s;
 
 
+  /* Ball choreography. One damping constant for every preset: higher = snappier.
+     The ball covers 1 - e^(-k*t) of the remaining distance after t seconds. */
+  --ball-damping: 8;
+  --ball-layer-fade: 300ms; /* total time to fade out, switch layer, fade in */
+
   /* Floating nav. --nav-h is updated by nav.js if the nav grows (text zoom). */
   --nav-top: calc(12px + env(safe-area-inset-top, 0px));
   --nav-h: 60px;

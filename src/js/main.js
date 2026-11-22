@@ -8,10 +8,9 @@
 
 import { initCalmToggle } from "../motion/motion-controller.js";
 import { startEffects } from "../motion/effects/index.js";
-import { initScrollIndicator } from "../motion/scroll-indicator.js";
 import { initLogoToTop } from "../sections/00-nav/logo-to-top.js";
 import { initNav } from "../sections/00-nav/nav.js";
-import { initWaitlist } from "../sections/11-waitlist/waitlist.js";
+import { initWaitlist } from "../sections/15-waitlist/waitlist.js";
 import { initProblemStats } from "../sections/02-problem/problem-stats.js";
 import { initProblemWeek } from "../sections/03-week-at-home/problem-week.js";
 import { initProblemGaps } from "../sections/04-what-goes-wrong/problem-gaps.js";
@@ -23,7 +22,6 @@ export function bootPage() {
   initNav(document.querySelector("[data-site-header]"));
   initWaitlist();
   startEffects();
-  initScrollIndicator(); // the only scroll-driven animation
   initLogoToTop();
 
   // Teammate sections (only present on the home page; each init checks for its own elements).

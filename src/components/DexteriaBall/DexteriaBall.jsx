@@ -38,6 +38,7 @@ export default function DexteriaBall({
   const shadowRef = useRef(null)
   const hintRef = useRef(null)
   const hitRef = useRef(null)
+  const pausedRef = useRef(false) // CHANGED: see setPaused
   const offset = useRef({ rx: 0, ry: 0 })     // extra rotation set through setTransform
   const actions = useRef({})                  // spin / squeeze, filled in by the scene below
   const btnKey = buttonDir.join(",")
@@ -51,6 +52,7 @@ export default function DexteriaBall({
     },
     setState(name) { if (rootRef.current) rootRef.current.dataset.state = name },
     setPointerEvents(on) { if (hitRef.current) hitRef.current.style.pointerEvents = on ? "auto" : "none" },
+    setPaused(on) { pausedRef.current = !!on }, // CHANGED: lets the ball layer stop drawing while it is faded out
     spin() { actions.current.spin?.() },
     squeeze() { actions.current.squeeze?.() },
   }), [])
@@ -111,7 +113,16 @@ export default function DexteriaBall({
       A.copy(Math.abs(V.y) < 0.99 ? Y : XV).cross(V).negate().normalize()
       B.copy(V).cross(A).normalize()
       t1s.set([A.x, A.y, A.z], i * 3); t2s.set([B.x, B.y, B.z], i * 3)
-      if (V.z > 0) uv.setXY(i, (V.x - logoOffset[0]) / logoSpan + 0.5, (V.y - logoOffset[1]) / logoSpan + 0.5) // CHANGED: logoOffset added; else uv.setXY(i, 5, 5)
+      // CHANGED: logoOffset added. Also fixed a bug from my earlier edit: a trailing comment had switched off the "else" branch below, so the back of the ball kept the default
+      // whole-sphere UVs and showed a huge, stretched copy of the logo.
+      const lx = (V.x - logoOffset[0]) / logoSpan, ly = (V.y - logoOffset[1]) / logoSpan
+      if (V.z > 0) uv.setXY(i, lx + 0.5, ly + 0.5)
+      else {
+        // CHANGED: back-facing vertices are pushed straight outward from the map centre (to 3 map widths), so triangles along the seam never
+        // sweep across the logo. The map edge is flat, so the back of the ball stays plain.
+        const m = Math.max(Math.abs(lx), Math.abs(ly), 1e-3)
+        uv.setXY(i, 0.5 + (lx / m) * 3, 0.5 + (ly / m) * 3)
+      }
     }
     const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(color).convertSRGBToLinear(), roughness: 0.84, metalness: 0, envMapIntensity: 0.4 }) // CHANGED: matte, soft finish like the reference picture (was roughness 0.6, envMapIntensity 0.55)
     const ball = new THREE.Mesh(geo, mat)
@@ -275,6 +286,7 @@ export default function DexteriaBall({
         if (disposed) return
         if (!visible || document.hidden) { running = false; return }
         raf = requestAnimationFrame(loop)
+        if (pausedRef.current) { last = now; return } // CHANGED: no drawing while the layer ball is faded out
         const dt = Math.min((now - last) / 1000, 0.05); last = now
         // Static mode (data-calm="on"): the idle float and sway ease out; dragging still works.
         still += ((docEl.dataset.calm === "on" || reduced ? 1 : 0) - still) * (1 - Math.exp(-dt * 3))

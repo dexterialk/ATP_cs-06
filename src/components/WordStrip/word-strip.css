@@ -1,5 +1,5 @@
 @layer sections {
-/* Moving word strip (from the teammate's solution notes). Dark text on the cream page.
+/* Moving word strip (from the teammate's solution notes). Two tones: green (the original: dark green band, cream words) and cream.
    The track moves with a CSS animation only (not tied to scrolling). It stops in Static mode (base.css),
    under prefers-reduced-motion, and while hovered or focused. */
 
@@ -30,6 +30,12 @@
 /* Outline words: filled with the page colour and stroked, so the font's inner contours do not show. */
 .word-strip__word--outline { color: var(--cream); -webkit-text-stroke: 3px var(--sage-text); paint-order: stroke fill; }
 .word-strip__dot { width: clamp(10px, 1vw, 14px); height: clamp(10px, 1vw, 14px); border-radius: 50%; background: var(--sage); flex: none; }
+
+/* ---- green: the original look ---- */
+.word-strip--green { background: var(--green); border-block-color: rgb(240 236 227 / 0.12); }
+.word-strip--green .word-strip__word { color: var(--on-green); }
+.word-strip--green .word-strip__word--outline { color: var(--green); -webkit-text-stroke: 3px var(--on-green-label); }
+.word-strip--green .word-strip__dot { background: #e3b985; }
 
 @keyframes word-strip { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .word-strip__track { animation: none; } }

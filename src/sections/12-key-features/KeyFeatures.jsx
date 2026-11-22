@@ -2,7 +2,7 @@ import "./key-features.css";
 
 export default function KeyFeatures() {
   return (
-    <section className="features" id="features" aria-labelledby="features-title" data-features="" data-ball-state="corner" data-effect="pinned-features">
+    <section className="features" id="key-features" aria-labelledby="features-title" data-features="" data-ball-state="corner" data-effect="pinned-features">
       <div className="features__sticky">
         <div className="features__head container">
           <div>
