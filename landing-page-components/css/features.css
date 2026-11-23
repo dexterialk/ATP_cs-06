@@ -1,0 +1,809 @@
+/*
+ * FeaturesSection.module.css (v4)
+ * Brand: ink #1c281e, green #5f6e5c, mint #a9b8a4, cream #f0ece3 (same cream as the rendered frames).
+ * Type: ONE family (Archivo, loaded by the page as --font-archivo) at three widths:
+ *   wide + light for headlines and numbers, normal for text, narrow + uppercase for labels.
+ * Style rule: type straight on the page, thin lines, no boxes, no blur, no fake devices.
+ */
+
+.dx-feat-section {
+  --ink: #1c281e;
+  --ink-soft: #5e685d;
+  --line: rgba(28, 40, 30, 0.16);
+  --green: #5f6e5c;
+  --cream: #f0ece3;
+  --gold: #a86a28;
+  --sans: var(--font-archivo, "Archivo"), "Helvetica Neue", Arial, sans-serif;
+  /* ONE type scale for the whole page, matched to the team's style guide
+     (section titles about 40px, body 17px, captions 13px). Change sizes here only. */
+  --fs-title: clamp(1.75rem, 2.6vw, 2.375rem);
+  --fs-num: clamp(1.75rem, 2.4vw, 2.25rem);
+  --fs-voice: 1.25rem;
+  --fs-body: 1.0625rem;
+  --fs-ui: 0.9375rem;
+  --fs-small: 0.8125rem;
+  --fs-label: 0.6875rem;
+  position: relative;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+/* stays on screen while the tall section scrolls past */
+.dx-feat-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.dx-feat-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* the page colour fading in from the left (behind the text) and the bottom (behind the timeline).
+   On most shots that area is empty cream anyway, so you only notice it on close-ups. */
+.dx-feat-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(240, 236, 227, 0.9) 0%, rgba(240, 236, 227, 0.62) 24%, rgba(240, 236, 227, 0) 40%),
+    linear-gradient(0deg, rgba(240, 236, 227, 0.85) 0, rgba(240, 236, 227, 0) 70px);
+}
+
+/* ------------------------------------------------ pinned to the ball */
+.dx-feat-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dx-feat-svgLayer {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.dx-feat-ballHit {
+  position: absolute;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.dx-feat-ballHit:active {
+  cursor: grabbing;
+}
+.dx-feat-ballHit:focus-visible {
+  outline: 1.5px dashed var(--green);
+  outline-offset: 6px;
+}
+
+.dx-feat-ringTrack {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.dx-feat-ringFill {
+  stroke: var(--green);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.dx-feat-trail {
+  stroke: var(--green);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 0.5 10;
+  opacity: 0.75;
+}
+
+.dx-feat-pulse {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid var(--green);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: dx-feat-pulse 1s ease-out;
+}
+
+/* callouts: a pin on the part, a thin leader line, the name in the empty space */
+.dx-feat-pin {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: var(--cream);
+  animation: dx-feat-fadeIn 0.3s ease both;
+}
+.dx-feat-pinNumber {
+  width: 18px;
+  height: 18px;
+  margin: -10px 0 0 -10px;
+  border: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 0 1.5px var(--cream);
+}
+.dx-feat-leader {
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  opacity: 0.75;
+  animation: dx-feat-draw 0.5s ease both;
+}
+.dx-feat-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  animation: dx-feat-fadeIn 0.4s 0.15s ease both;
+}
+.dx-feat-labelLeft {
+  transform: translate(-100%, -50%);
+  text-align: right;
+}
+.dx-feat-labelPlate {
+  padding: 7px 11px 8px;
+  background: var(--cream);
+}
+.dx-feat-label b {
+  font-weight: 400;
+  font-size: var(--fs-ui);
+  color: var(--ink);
+}
+.dx-feat-label small {
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+/* phones: names listed under the text, matching the numbered pins */
+.dx-feat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-small);
+}
+.dx-feat-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dx-feat-legend i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+}
+
+/* ------------------------------------------------ chapter text */
+.dx-feat-caption {
+  position: absolute;
+  top: 50%;
+  left: clamp(20px, 6vw, 104px);
+  width: min(440px, 38vw);
+  transform: translateY(-54%);
+  animation: dx-feat-captionIn 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.dx-feat-kicker {
+  margin: 0 0 18px;
+  font-size: var(--fs-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: pre;
+  color: var(--green);
+}
+
+.dx-feat-title {
+  margin: 0 0 16px;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: var(--fs-title);
+  line-height: 1;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.dx-feat-body {
+  margin: 0 0 26px;
+  max-width: 36ch;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.dx-feat-refs {
+  margin: 26px 0 0;
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  color: rgba(28, 40, 30, 0.38);
+}
+
+.dx-feat-note {
+  margin: 10px 0 0;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* numbers that react to the ball */
+.dx-feat-readout {
+  display: flex;
+  gap: 36px;
+  margin: 0 0 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.dx-feat-readout dt {
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.dx-feat-readout dd {
+  margin: 4px 0 0;
+  font-family: var(--sans);
+  font-size: var(--fs-num);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.dx-feat-readout dd small {
+  margin-left: 4px;
+  font-family: var(--sans);
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+/* press and hold */
+.dx-feat-hold {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: 600 var(--fs-ui) var(--sans);
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.dx-feat-hold:disabled {
+  cursor: default;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+.dx-feat-holdDot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: radial-gradient(circle, var(--green) 0 5px, transparent 6px);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.dx-feat-hold:active:not(:disabled) .dx-feat-holdDot {
+  transform: scale(0.86);
+  background: radial-gradient(circle, var(--green) 0 9px, transparent 10px);
+}
+.dx-feat-hold:disabled .dx-feat-holdDot {
+  border-color: var(--line);
+  background: none;
+}
+
+/* movement: two little lines */
+.dx-feat-lines {
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.dx-feat-lines > div {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  align-items: center;
+  opacity: 0.45;
+  transition: opacity 0.3s;
+}
+.dx-feat-lines > div.lineOn {
+  opacity: 1;
+}
+.dx-feat-lines span {
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.dx-feat-lines svg {
+  width: 100%;
+  height: 30px;
+  overflow: visible;
+}
+.dx-feat-lines path {
+  stroke: var(--green);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* games */
+.dx-feat-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-family: var(--sans);
+  font-size: var(--fs-voice);
+  line-height: 1.1;
+}
+.dx-feat-langs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 18px;
+}
+.dx-feat-langs button {
+  padding: 4px 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  font: var(--fs-small) var(--sans);
+  cursor: pointer;
+}
+.dx-feat-langs button.langOn {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.dx-feat-langs .dx-feat-note {
+  margin: 0 0 0 8px;
+}
+
+/* progress chart */
+.dx-feat-chartHead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+.dx-feat-bigNum {
+  font-family: var(--sans);
+  font-size: var(--fs-num);
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dx-feat-chart {
+  display: block;
+  width: 100%;
+  max-width: 340px; /* the chart stays small, even when the text column is wide */
+  margin-top: 8px;
+  overflow: visible;
+}
+.dx-feat-goal {
+  stroke: var(--gold);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.dx-feat-goalText {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  fill: var(--gold);
+}
+/* non-scaling-stroke: lines keep the same thin width in pixels at any chart size */
+.dx-feat-chart line,
+.dx-feat-chart path,
+.dx-feat-lines path {
+  vector-effect: non-scaling-stroke;
+}
+.dx-feat-handLine {
+  stroke: var(--green);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.dx-feat-dot {
+  fill: var(--green);
+}
+
+/* difficulty */
+.dx-feat-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.dx-feat-role {
+  display: block;
+  margin-bottom: 14px;
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.dx-feat-slider {
+  position: relative;
+  height: 1.5px;
+  margin: 8px 0 0;
+  background: var(--ink);
+}
+.dx-feat-slider span {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--cream);
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+.dx-feat-ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: var(--fs-label);
+  color: var(--ink-soft);
+}
+.dx-feat-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 14px 0 0;
+  font-size: var(--fs-small);
+  color: rgba(28, 40, 30, 0.3);
+  transition: color 0.3s;
+}
+.dx-feat-checkOn {
+  color: var(--green);
+}
+.dx-feat-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.dx-feat-textBtn,
+.dx-feat-locked {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  font: 600 var(--fs-ui) var(--sans);
+  color: var(--ink);
+  cursor: pointer;
+}
+.dx-feat-locked {
+  border-bottom-style: dashed;
+  color: rgba(28, 40, 30, 0.38);
+  cursor: not-allowed;
+}
+
+/* sharing */
+.dx-feat-switchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 340px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-ui);
+}
+.dx-feat-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+.dx-feat-switch span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform 0.25s;
+}
+.dx-feat-switchOn {
+  background: var(--green);
+  border-color: var(--green);
+}
+.dx-feat-switchOn span {
+  transform: translateX(20px);
+  background: var(--cream);
+}
+.dx-feat-flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 340px;
+  margin-top: 18px;
+  font-size: var(--fs-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity 0.3s;
+}
+.dx-feat-flowOff {
+  opacity: 0.35;
+}
+.dx-feat-flowLine {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: var(--ink);
+}
+.dx-feat-flowLine i {
+  position: absolute;
+  top: -4px;
+  width: 9px;
+  height: 9px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* ------------------------------------------------ timeline */
+.dx-feat-timeline {
+  height: auto; /* reset in case the page has a global nav{} rule (the team's styles.css sets nav height) */
+  position: absolute;
+  left: clamp(20px, 6vw, 104px);
+  right: clamp(20px, 6vw, 104px);
+  bottom: 22px;
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+}
+.dx-feat-timeline ol {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dx-feat-timeline li {
+  flex-basis: 0;
+}
+.dx-feat-timeline button {
+  width: 100%;
+  padding: 8px 0 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+.dx-feat-bar {
+  display: block;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+.dx-feat-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: left;
+}
+.dx-feat-navLabel {
+  display: block;
+  margin-top: 8px;
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.dx-feat-navOn .dx-feat-navLabel {
+  color: var(--ink);
+}
+.dx-feat-counter {
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.dx-feat-srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ------------------------------------------------ type: one family, three widths
+   wide (125) + light: headlines and big numbers, like film titles
+   normal (100): running text
+   narrow (75) + uppercase: small labels, callout details, the timeline */
+.dx-feat-title,
+.dx-feat-voice,
+.dx-feat-label b,
+.dx-feat-readout dd,
+.dx-feat-bigNum {
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  font-weight: 300;
+}
+.dx-feat-title {
+  font-size: var(--fs-title);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+.dx-feat-readout dd,
+.dx-feat-bigNum {
+  font-weight: 200;
+  letter-spacing: -0.03em;
+}
+.dx-feat-label b {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.dx-feat-voice {
+  font-size: var(--fs-voice);
+  letter-spacing: -0.02em;
+}
+.dx-feat-kicker,
+.dx-feat-refs,
+.dx-feat-label small,
+.dx-feat-readout dt,
+.dx-feat-lines span,
+.dx-feat-goalText,
+.dx-feat-role,
+.dx-feat-flow,
+.dx-feat-navLabel,
+.dx-feat-counter {
+  font-stretch: 75%;
+  font-variation-settings: "wdth" 75;
+  font-weight: 500;
+}
+.dx-feat-body,
+.dx-feat-note {
+  font-weight: 400;
+}
+
+@keyframes dx-feat-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dx-feat-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dx-feat-captionIn {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-54% + 18px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-54%);
+  }
+}
+@keyframes dx-feat-pulse {
+  from {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.55);
+  }
+}
+
+/* ------------------------------------------------ phones and tall screens:
+   the ball on top (square frames), the text underneath */
+@media (max-aspect-ratio: 1/1) {
+  .dx-feat-scrim {
+    display: none;
+  }
+  .dx-feat-caption {
+    top: auto;
+    bottom: 64px;
+    left: 18px;
+    right: 18px;
+    width: auto;
+    transform: none;
+    animation-name: dx-feat-fadeIn;
+  }
+  .dx-feat-kicker {
+    margin-bottom: 10px;
+  }
+  .dx-feat-title {
+    font-size: clamp(1.25rem, 4.6vw, 1.625rem);
+    margin-bottom: 10px;
+  }
+  .dx-feat-body,
+  .dx-feat-refs {
+    display: none;
+  }
+  .dx-feat-readout {
+    gap: 24px;
+    margin-bottom: 14px;
+  }
+  .dx-feat-readout dd,
+  .dx-feat-bigNum {
+    font-size: 1.5rem;
+  }
+  .dx-feat-chart {
+    max-width: 260px;
+  }
+  .dx-feat-roles {
+    gap: 18px;
+  }
+  .dx-feat-voice {
+    font-size: 1.0625rem;
+  }
+  .dx-feat-langs .dx-feat-note {
+    display: none;
+  }
+  .dx-feat-lines > div {
+    grid-template-columns: 110px 1fr;
+  }
+  .dx-feat-timeline {
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    gap: 12px;
+  }
+  .dx-feat-navLabel {
+    display: none;
+  }
+
+}
+
+/* people who turn on "reduce motion" get no fades (the film still follows their scroll) */
+@media (prefers-reduced-motion: reduce) {
+  .dx-feat-caption,
+  .dx-feat-pin,
+  .dx-feat-label,
+  .dx-feat-leader,
+  .dx-feat-pulse {
+    animation: none;
+  }
+}

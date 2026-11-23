@@ -1,0 +1,1 @@
+This folder contains the individual HTML components and shared image assets developed for the landing page. Each team member can contribute their respective sections independently. The components will later be integrated into a single HTML file to create the complete landing page.
