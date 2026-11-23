@@ -1,14 +1,11 @@
-# ATP_cs-06
-# Hand Activity Board
+# ATP_cs-06: Dexteria
 
-A physical hand-activity kit with a smart board, a pressure ball, and a companion app. It's designed to make hand exercises more fun for people with reduced hand movement or grip strength.
+A home hand rehabilitation kit built around the **Smart Ball**, a sensor ball that connects to a mobile app. It measures grip, sustained grip, movement and tremor while users play short exercise games, and shares progress with their clinicians and caregivers.
 
-## Team
-
-Group CS-06 : Safiya Nazly, Vinuri Nanayakkara, Fathima Razyath, Raiqa Abdul Qadir, Zaina Zayan 
-
-## Project
-
-Our SDGP (CS 6 ATP) project at IIT, module 5COSC021W. The app and device are for engagement and hand-activity practice, not medical diagnosis or treatment.
+**Team:**  Group CS-06: Safiya Nazly, Vinuri Nanayakkara, Fathima Razyath, Raiqa Abdul Qadir, Zaina Zayan 
 
 **Supervisor:** Ms. Mohanadas Jananie
+
+**Project:** Our ATP project at IIT, module 5COSC021C.Y (University of Westminster 5COSC021W).
+
+*Dexteria is a wellness tool, not a medical device. It does not diagnose or treat any condition.*
