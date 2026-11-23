@@ -1,0 +1,9 @@
+/* DEXTERIA WAITLIST SECTION */
+.brevo-frame,
+.brevo-honeypot {
+  display: none;
+}
+
+.waitlist-privacy-link {
+  text-decoration: underline;
+}
