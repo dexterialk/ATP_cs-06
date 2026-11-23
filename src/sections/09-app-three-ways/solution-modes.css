@@ -69,4 +69,8 @@
   .dx-note svg{ flex: none; width: 20px; height: 20px; margin-top: 1px; fill: none; stroke: #E3B985; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
   .dx-note{ max-width: none; width: 100%; box-sizing: border-box; }
+
+  /* This green section has no wave, so it needs only a modest top gap (the shared rule reserved space for a wave). */
+  #solution-modes.dx-solution{ padding-top: clamp(48px, 6vw, 84px); }
+  #solution-modes .dx-steps{ margin-top: 0; } /* the steps row added another 64 to 112px above itself */
 }

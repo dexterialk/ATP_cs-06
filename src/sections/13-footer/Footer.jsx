@@ -1,6 +1,6 @@
 import "./footer.css";
 
-// 12 Footer. Flat, at the very bottom. The contact email comes first; then links to the Privacy notice and
+// 13 Footer. Flat, at the very bottom. The contact email comes first; then links to the Privacy notice and
 // Accessibility statement pages, the three social platforms, the wellness disclaimer and the copyright line.
 const SOCIAL = [
   {

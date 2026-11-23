@@ -7,7 +7,7 @@ import "./waitlist.css";
 const DexteriaBall = lazy(() => import("../../components/DexteriaBall/DexteriaBall.jsx"));
 const STILL = "/assets/ball/smart-ball-still.webp";
 
-// 10 Waitlist. Copy and sign-up method are Sima 01's: the form posts the email straight to
+// 11 Waitlist. Copy and sign-up method are Sima 01's: the form posts the email straight to
 // Brevo through a hidden iframe, and waitlist.js shows the confirmation.
 export default function Waitlist() {
   const ballRef = useRef(null);

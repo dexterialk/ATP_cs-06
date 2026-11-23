@@ -117,4 +117,7 @@
     .dx-solution__grid{ grid-template-columns: minmax(0, 1fr); align-items: start; }
     .dx-demo{ max-width: 560px; width: 100%; margin-inline: auto; }
   }
+
+  /* Top of the green section: just the wave plus a modest gap, at every screen size (the shared rule added far more). */
+  #solution.dx-solution{ padding-top: calc(clamp(50px, 7vw, 110px) + clamp(28px, 4vw, 56px)); }
 }

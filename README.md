@@ -255,35 +255,19 @@ dexteria-site/
 |   |   |   |-- solution-modes.css
 |   |   |   |-- solution-modes.js
 |   |   |   `-- SolutionModes.jsx
-|   |   |-- 10-banner/
-|   |   |   |-- banner.css
-|   |   |   |-- Banner.jsx
-|   |   |   `-- README.md
-|   |   |-- 11-how-it-works/
-|   |   |   |-- how-it-works.css
-|   |   |   |-- HowItWorks.jsx
-|   |   |   `-- README.md
-|   |   |-- 12-key-features/
-|   |   |   |-- key-features.css
-|   |   |   |-- KeyFeatures.jsx
-|   |   |   `-- README.md
-|   |   |-- 13-app-preview/
-|   |   |   |-- app-preview.css
-|   |   |   |-- AppPreview.jsx
-|   |   |   `-- README.md
-|   |   |-- 14-team/
+|   |   |-- 10-team/
 |   |   |   |-- Team.jsx
 |   |   |   `-- team.module.css
-|   |   |-- 15-waitlist/
+|   |   |-- 11-waitlist/
 |   |   |   |-- README.md
 |   |   |   |-- waitlist.css
 |   |   |   |-- waitlist.js
 |   |   |   `-- Waitlist.jsx
-|   |   |-- 16-contact/
+|   |   |-- 12-contact/
 |   |   |   |-- contact.css
 |   |   |   |-- Contact.jsx
 |   |   |   `-- README.md
-|   |   |-- 17-footer/
+|   |   |-- 13-footer/
 |   |   |   |-- footer.css
 |   |   |   |-- Footer.jsx
 |   |   |   `-- README.md

@@ -1,0 +1,104 @@
+@layer sections {
+/* 12 Contact: plain page background, no banner. Heading on the left, contact links on the right,
+   both aligned to the same container edges as the sections around it. Stacks on tablets and phones. */
+
+.contact {
+  position: relative;
+  padding-block: clamp(3rem, 2rem + 4vw, 6rem) var(--section-pad);
+}
+.contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .contact__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(3rem, 6vw, 6rem); align-items: center; }
+}
+
+.contact__intro { margin-top: 1.25rem; max-width: 30rem; color: var(--muted); line-height: 1.75; }
+
+.contact__panel {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem, 1rem + 2vw, 2rem);
+  background: var(--white);
+  border: 1px solid rgb(28 42 32 / 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact__label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage-text);
+}
+.contact__label--follow { margin-top: 0.5rem; }
+
+/* The email is the main action: a large dark pill-card. */
+.contact__email {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.375rem 1rem;
+  align-items: center;
+  padding: clamp(1.125rem, 1rem + 1vw, 1.75rem);
+  background: var(--green);
+  color: var(--cream);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background-color var(--dur-fast), transform var(--dur-fast) var(--ease);
+}
+.contact__email .contact__label { grid-column: 1; color: var(--on-green-label); }
+.contact__address {
+  grid-column: 1;
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 0.9rem + 1.4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.contact__email .contact__go { grid-column: 2; grid-row: 1 / span 2; }
+.contact__email:hover { background: var(--green-hover); transform: translateY(-2px); }
+
+.contact__go {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transition: transform var(--dur-fast) var(--ease);
+}
+.contact__go svg { width: 18px; height: 18px; }
+a:hover > .contact__go { transform: translate(2px, -2px); }
+
+/* Social links: clean rows with a divider between them. */
+.contact__social { display: grid; margin: 0; padding: 0; }
+.contact__row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  min-height: 64px;
+  padding: 0.5rem 0.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--green);
+  text-decoration: none;
+}
+.contact__social li:first-child .contact__row { border-top: 0; }
+.contact__name { font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; }
+.contact__note { font-size: var(--text-sm); color: var(--muted); }
+.contact__row .contact__go { width: 36px; height: 36px; }
+.contact__row:hover .contact__name { text-decoration: underline; text-underline-offset: 0.25em; }
+
+@media (max-width: 479px) {
+  .contact__email { grid-template-columns: minmax(0, 1fr); }
+  .contact__email .contact__go { display: none; } /* keeps the address on one line */
+  .contact__address { font-size: 1.0625rem; overflow-wrap: normal; }
+  .contact__row { grid-template-columns: 1fr auto; }
+  .contact__note { display: none; }
+}
+
+}

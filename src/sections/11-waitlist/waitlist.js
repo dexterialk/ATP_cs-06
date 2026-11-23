@@ -1,4 +1,4 @@
-// 10 Waitlist: confirmation message (Sima 01's script, moved out of the page).
+// 11 Waitlist: confirmation message (Sima 01's script, moved out of the page).
 //
 // The form posts to Brevo through the hidden iframe "brevoFrame", so the page itself
 // never sees Brevo's answer. After submitting, this script disables the button briefly,

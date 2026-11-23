@@ -8,9 +8,9 @@ import SolutionDemo from "../sections/06-how-dexteria-helps/SolutionDemo.jsx";
 import Progress from "../sections/07-progress/Progress.jsx";
 import FeaturesSection from "../sections/08-features/Features.jsx";
 import SolutionModes from "../sections/09-app-three-ways/SolutionModes.jsx";
-import TeamSection from "../sections/14-team/Team.jsx";
-import Waitlist from "../sections/15-waitlist/Waitlist.jsx";
-import Contact from "../sections/16-contact/Contact.jsx";
+import TeamSection from "../sections/10-team/Team.jsx";
+import Waitlist from "../sections/11-waitlist/Waitlist.jsx";
+import Contact from "../sections/12-contact/Contact.jsx";
 
 // One reusable word strip, used three times below.
 import WordStrip from "../components/WordStrip/WordStrip.jsx";
@@ -31,10 +31,10 @@ export default function Home() {
       <Progress />                   {/* 07 */}
       <FeaturesSection />            {/* 08 */}
       <SolutionModes />              {/* 09 */}
-      <TeamSection />                {/* 14 */}
-      <Waitlist />                   {/* 15 */}
+      <TeamSection />                {/* 10 */}
+      <Waitlist />                   {/* 11 */}
       <WordStrip tone="green" />     {/* green again, just above the contact section */}
-      <Contact />                    {/* 16 (the footer, 17, is in the layout) */}
+      <Contact />                    {/* 12 (the footer, 13, is in the layout) */}
     </>
   );
 }

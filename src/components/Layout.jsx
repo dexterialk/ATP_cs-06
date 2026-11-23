@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import Nav from "../sections/00-nav/Nav.jsx";
-import Footer from "../sections/17-footer/Footer.jsx";
+import Footer from "../sections/13-footer/Footer.jsx";
 
 // The 3D ball (Three.js) is a large download, so it loads after the page.
 const BallLayer = lazy(() => import("../motion/choreography/BallLayer.jsx"));
