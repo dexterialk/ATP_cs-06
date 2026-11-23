@@ -1,0 +1,32 @@
+<!-- DEXTERIA WAITLIST SECTION
+     HTML partial: insert where the waitlist should appear in your main page.
+     Requires the existing global CSS variables/classes: --white, --muted,
+     .container, .section-label, .section-description, .reveal, .form-note and .pop.
+-->
+<section class="subscribe container" id="subscribe">
+  <p class="section-label reveal">Get early updates</p>
+  <h2 class="reveal" style="--d:.1s">Join the waitlist.</h2>
+  <p class="section-description reveal" style="--d:.2s">
+    Be among the first to hear about Dexteria. Join the waitlist for project updates,
+    sneak peeks, and launch news.
+  </p>
+
+  <iframe name="brevoFrame" class="brevo-frame" title="" aria-hidden="true"></iframe>
+
+  <form class="subscribe-form reveal" id="subscribeForm" style="--d:.3s"
+        target="brevoFrame"
+        action="https://6ec1d46d.sibforms.com/serve/MUIFAJWNJEXXtna4lcIcAmjiBqu5yMNruBEqPBRUJu54dW1T4kMIRlMEmnWcOMlRXI_z4a1KK2NR8Jicr7MtVgkpdLmnQZru33xuxbXnMsHh4fm0fKhqxl7r_qMDRmoYwf7yzJ-IGJjpBM4U0M5rUBrEP_qEl1V5FG8NxMpH35aRboN3Z2lsudNfRqSiEdjcfXOWCL_zib1m42ny2Q=="
+        method="POST">
+    <input type="email" id="email" name="EMAIL" placeholder="Your email address"
+           aria-label="Your email address" autocomplete="email" required>
+    <input type="text" name="email_address_check" value=""
+           class="brevo-honeypot" tabindex="-1" autocomplete="off">
+    <input type="hidden" name="locale" value="en">
+    <button type="submit">Join the waitlist ↗</button>
+  </form>
+
+  <p class="form-note reveal" id="formNote" style="--d:.4s">
+    No spam. Just updates worth opening.
+    <a href="#privacy" class="waitlist-privacy-link">Privacy notice</a>.
+  </p>
+</section>
