@@ -8,10 +8,6 @@ import SolutionDemo from "../sections/06-how-dexteria-helps/SolutionDemo.jsx";
 import Progress from "../sections/07-progress/Progress.jsx";
 import FeaturesSection from "../sections/08-features/Features.jsx";
 import SolutionModes from "../sections/09-app-three-ways/SolutionModes.jsx";
-import Banner from "../sections/10-banner/Banner.jsx";
-import HowItWorks from "../sections/11-how-it-works/HowItWorks.jsx";
-import KeyFeatures from "../sections/12-key-features/KeyFeatures.jsx";
-import AppPreview from "../sections/13-app-preview/AppPreview.jsx";
 import TeamSection from "../sections/14-team/Team.jsx";
 import Waitlist from "../sections/15-waitlist/Waitlist.jsx";
 import Contact from "../sections/16-contact/Contact.jsx";
@@ -35,10 +31,6 @@ export default function Home() {
       <Progress />                   {/* 07 */}
       <FeaturesSection />            {/* 08 */}
       <SolutionModes />              {/* 09 */}
-      <Banner />                     {/* 10 */}
-      <HowItWorks />                 {/* 11 */}
-      <KeyFeatures />                {/* 12 */}
-      <AppPreview />                 {/* 13 */}
       <TeamSection />                {/* 14 */}
       <Waitlist />                   {/* 15 */}
       <WordStrip tone="green" />     {/* green again, just above the contact section */}
